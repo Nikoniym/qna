@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
-  it { should have_many :answers}
-
   question = FactoryBot.build(:question)
   it { expect(question).to have_many(:answers).dependent(:destroy) }
 
