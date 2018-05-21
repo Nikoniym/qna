@@ -14,7 +14,7 @@
 !/tmp/.keep
 .idea
 config/database.yml
-
+tmp
 # Ignore uploaded files in development
 /storage/*
 
