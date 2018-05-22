@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :load_question, only: %i[show edit update]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :find_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -35,9 +36,14 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    @question.destroy
+    redirect_to questions_path
+  end
+
   private
 
-  def load_question
+  def find_question
     @question = Question.find(params[:id])
   end
 
