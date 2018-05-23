@@ -70,7 +70,7 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, params: {question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { post :create, params: {question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -129,6 +129,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
+    let(:question) { create(:question, user: @user) }
 
     it 'deletes question' do
       question.reload
@@ -138,6 +139,7 @@ RSpec.describe QuestionsController, type: :controller do
     it 'redirect to index view' do
       delete :destroy, params: { id: question }
       expect(response).to redirect_to questions_path
+      expect(flash[:notice]).to eq 'Your question successfully destroy'
     end
   end
 end

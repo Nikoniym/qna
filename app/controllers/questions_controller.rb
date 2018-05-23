@@ -22,8 +22,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.user = current_user
     if @question.save
-      flash[:notice] = 'Your question successfully created.'
-      redirect_to @question
+      redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new
     end
@@ -38,9 +37,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    flash[:notice] = 'Your question successfully destroy'
-    redirect_to questions_path
+    if current_user&.author_of?(@question)
+      @question.destroy
+      redirect_to questions_path, notice: 'Your question successfully destroy'
+    else
+      redirect_to questions_path, alert: "You can't delete someone else's question"
+    end
   end
 
   private

@@ -10,15 +10,15 @@ feature 'Show questions with answers', %q{
   given!(:answers) { create_list(:answer_various, 2, question: question, user: user) }
 
   scenario 'go from the list to the questions' do
+    visit questions_path
 
-    visit '/questions'
     click_on 'show'
     expect(current_path).to eq question_path(question)
-    # save_and_open_page
   end
 
   scenario 'have a questions with answers' do
-    visit "/questions/#{question.id}"
+    visit question_path(question)
+
     expect(page).to have_content(question.title, question.body)
 
     answers.each do |answer|

@@ -12,18 +12,18 @@ feature 'Create the answer to the questions', %q{
   scenario 'Authenticated user to create the answer to the questions with valid parameter' do
     sign_in(user)
 
-    visit "/questions/#{question.id}"
+    visit question_path(question)
 
     fill_in 'Body', with: 'text text text'
     click_on 'Create'
 
-    expect(page).to have_content 'Your answer successfully created.'
+    expect(page).to have_content 'Your answer successfully created.', 'text text text'
   end
 
   scenario 'Authenticated user to create the answer to the questions with invalid parameter' do
     sign_in(user)
 
-    visit "/questions/#{question.id}"
+    visit question_path(question)
 
     fill_in 'Body', with: ''
     click_on 'Create'
@@ -32,7 +32,8 @@ feature 'Create the answer to the questions', %q{
   end
 
   scenario 'Non-authenticated user try to create the answer to the questions' do
-    visit "/questions/#{question.id}"
+    visit question_path(question)
+
     fill_in 'Body', with: 'text text text'
     click_on 'Create'
 

@@ -10,7 +10,7 @@ feature 'Show list questions', %q{
   given!(:questions) { create_list(:question_various, 2, user: create(:user)) }
 
   scenario 'View all questions on the page index' do
-    visit '/questions'
+    visit questions_path
 
     questions.each do |question|
       expect(page).to have_content(question.title, question.body)

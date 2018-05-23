@@ -11,7 +11,7 @@ feature 'Create questions', %q{
   scenario 'Authenticated user create the questions with valid parameter' do
     sign_in(user)
 
-    visit '/questions'
+    visit questions_path
     click_on 'Ask question'
 
     fill_in 'Title', with: 'Test questions'
@@ -19,12 +19,14 @@ feature 'Create questions', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Test questions', 'text text text'
   end
 
   scenario 'Authenticated user create the questions with invalid parameter' do
     sign_in(user)
 
-    visit '/questions'
+    visit questions_path
+
     click_on 'Ask question'
 
     fill_in 'Title', with: ''
@@ -35,7 +37,8 @@ feature 'Create questions', %q{
   end
 
   scenario 'Non-authenticated user try to create questions' do
-    visit '/questions'
+    visit questions_path
+
     click_on 'Ask question'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'

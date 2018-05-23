@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create(:user) }
-  let(:question) { create(:question,  user: user) }
-  let(:answer) { create(:answer, question: question, user: user)}
+  sign_in_user
+  let(:question) { create(:question,  user: @user) }
+  let(:answer) { create(:answer, question: question, user: @user)}
 
   describe 'GET #edit' do
-    sign_in_user
     before { get :edit, params: { id: answer } }
 
     it 'assings the requested answer to @answer' do
@@ -19,10 +18,11 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
-    sign_in_user
+
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(question.answers, :count).by(1)
+        expect(assigns(:answer).user).to eq @user
       end
 
       it 'redirects to show view question' do
@@ -50,7 +50,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
     context 'valid attributes' do
       it 'assings the requested answer to @answer' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }
@@ -84,16 +83,15 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    sign_in_user
-
     it 'deletes question' do
       answer.reload
-      expect { delete :destroy, params: { id: answer }  }.to change(Answer, :count).by(-1)
+      expect { delete :destroy, params: { id:  answer } }.to change(Answer, :count).by(-1)
     end
 
     it 'redirect to question show' do
       delete :destroy, params: { id: answer }
       expect(response).to redirect_to question_path(question)
+      expect(flash[:notice]).to eq 'Your answer successfully destroy'
     end
   end
 end
