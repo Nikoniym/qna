@@ -7,7 +7,7 @@ feature 'Create the answer to the questions', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user to create the answer to the questions with valid parameter' do
     sign_in(user)

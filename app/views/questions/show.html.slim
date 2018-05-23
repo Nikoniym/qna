@@ -1,5 +1,9 @@
 h1 = @question.title
 p = @question.body
+- if current_user == @question.user
+  = link_to 'edit', edit_question_path(@question)
+  '  |
+  = link_to 'destroy', question_path(@question), method: :delete,  data: { confirm: 'Are you sure?' }
 ol
   = render partial: 'answers/answer', collection: @answers
 hr

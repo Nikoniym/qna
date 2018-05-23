@@ -5,9 +5,9 @@ feature 'Show questions with answers', %q{
   As an any user
   I want to be able to go from the list to the questions and view it along with the answers
 } do
-
-  given!(:question) { create(:question) }
-  given!(:answers) { create_list(:answer_various, 2, question: question) }
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
+  given!(:answers) { create_list(:answer_various, 2, question: question, user: user) }
 
   scenario 'go from the list to the questions' do
 

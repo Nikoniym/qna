@@ -3,5 +3,3 @@ tr
     h2 = question.title
     p = question.body
   td = link_to 'show', question_path(question)
-  td = link_to 'edit', edit_question_path(question)
-  td = link_to 'destroy', question_path(question), method: :delete,  data: { confirm: 'Are you sure?' }

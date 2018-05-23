@@ -7,7 +7,7 @@ feature 'Show list questions', %q{
 } do
 
 
-  given!(:questions) { create_list(:question_various, 2) }
+  given!(:questions) { create_list(:question_various, 2, user: create(:user)) }
 
   scenario 'View all questions on the page index' do
     visit '/questions'

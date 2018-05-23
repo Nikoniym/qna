@@ -1,21 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question)}
-  # let(:answers) { create_list(:answer_various, 2, question: question) }
-
-  describe 'GET #show' do
-    before { get :show, params: { id: answer } }
-
-    it 'assings the requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
+  let(:user) { create(:user) }
+  let(:question) { create(:question,  user: user) }
+  let(:answer) { create(:answer, question: question, user: user)}
 
   describe 'GET #edit' do
     sign_in_user
@@ -58,8 +46,6 @@ RSpec.describe AnswersController, type: :controller do
         post :create,  params: { question_id: question, answer: attributes_for(:invalid_question) }
         expect(response).to render_template 'questions/show'
       end
-
-
     end
   end
 
@@ -94,6 +80,20 @@ RSpec.describe AnswersController, type: :controller do
       it 're-renders edit view' do
         expect(response).to render_template :edit
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    it 'deletes question' do
+      answer.reload
+      expect { delete :destroy, params: { id: answer }  }.to change(Answer, :count).by(-1)
+    end
+
+    it 'redirect to question show' do
+      delete :destroy, params: { id: answer }
+      expect(response).to redirect_to question_path(question)
     end
   end
 end
