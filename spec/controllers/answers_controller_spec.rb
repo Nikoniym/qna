@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question)}
+  # let(:answers) { create_list(:answer_various, 2, question: question) }
 
   describe 'GET #show' do
     before { get :show, params: { id: answer } }
@@ -13,19 +14,6 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'renders show view' do
       expect(response).to render_template :show
-    end
-  end
-
-  describe 'GET #new' do
-    sign_in_user
-    before { get :new, params: { question_id: question } }
-
-    it 'assigns a new answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
     end
   end
 
@@ -49,9 +37,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'redirects to show view question' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer_path(assigns(:answer))
+        expect(response).to redirect_to question_path(question)
       end
     end
 
@@ -60,10 +48,18 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, params: { question_id: question, answer: attributes_for(:invalid_answer) } }.to_not change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 'assings the requested answers to @answers' do
         post :create,  params: { question_id: question, answer: attributes_for(:invalid_question) }
-        expect(response).to render_template :new
+        question
+        expect(assigns(:answers)).to eq question.answers
       end
+
+      it 're-renders show view question' do
+        post :create,  params: { question_id: question, answer: attributes_for(:invalid_question) }
+        expect(response).to render_template 'questions/show'
+      end
+
+
     end
   end
 

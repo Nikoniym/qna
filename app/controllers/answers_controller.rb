@@ -6,21 +6,20 @@ class AnswersController < ApplicationController
   def show
   end
 
-  def new
-    @answer = Answer.new
-  end
-
   def edit
   end
 
   def create
+    @answers = @question.answers
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
       flash[:notice] = 'Your answer successfully created.'
-      redirect_to @answer
+      redirect_to question_path(@question)
     else
-      render :new
+      @question.reload
+      @answers = @question.answers
+      render 'questions/show'
     end
   end
 

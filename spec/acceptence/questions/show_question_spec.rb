@@ -24,6 +24,5 @@ feature 'Show questions with answers', %q{
     answers.each do |answer|
       expect(page).to have_content(answer.body)
     end
-    save_and_open_page
   end
 end

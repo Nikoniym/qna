@@ -8,7 +8,8 @@ feature 'Create the answer to the questions', %q{
 
   given(:user) { create(:user) }
   given(:question) { create(:question) }
-  scenario 'Authenticated user to create the answer to the questions' do
+
+  scenario 'Authenticated user to create the answer to the questions with valid parameter' do
     sign_in(user)
 
     visit "/questions/#{question.id}"
@@ -17,6 +18,17 @@ feature 'Create the answer to the questions', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your answer successfully created.'
+  end
+
+  scenario 'Authenticated user to create the answer to the questions with invalid parameter' do
+    sign_in(user)
+
+    visit "/questions/#{question.id}"
+
+    fill_in 'Body', with: ''
+    click_on 'Create'
+
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario 'Non-authenticated user try to create the answer to the questions' do

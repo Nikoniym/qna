@@ -1,0 +1,7 @@
+li
+  div = answer.body
+  /= link_to 'show', answer_path(answer)
+  /'  |
+  /= link_to 'edit', edit_answer_path(answer)
+  /'  |
+  /= link_to 'destroy', answer_path(answer), method: :delete,  data: { confirm: 'Are you sure?' }

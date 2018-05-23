@@ -12,10 +12,6 @@ feature 'Show list questions', %q{
   scenario 'View all questions on the page index' do
     visit '/questions'
 
-    # questions = create_list(:questions, 2)
-    # Question.push questions
-
-    # save_and_open_page
     questions.each do |question|
       expect(page).to have_content(question.title, question.body)
     end

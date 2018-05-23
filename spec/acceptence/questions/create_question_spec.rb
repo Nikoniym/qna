@@ -8,7 +8,7 @@ feature 'Create questions', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user create the questions' do
+  scenario 'Authenticated user create the questions with valid parameter' do
     sign_in(user)
 
     visit '/questions'
@@ -19,6 +19,19 @@ feature 'Create questions', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your question successfully created.'
+  end
+
+  scenario 'Authenticated user create the questions with invalid parameter' do
+    sign_in(user)
+
+    visit '/questions'
+    click_on 'Ask question'
+
+    fill_in 'Title', with: ''
+    fill_in 'Text', with: ''
+    click_on 'Create'
+
+    expect(page).to have_content "Title can't be blank", "Body can't be blank"
   end
 
   scenario 'Non-authenticated user try to create questions' do
