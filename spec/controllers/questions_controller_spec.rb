@@ -10,7 +10,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { get :index }
 
     it 'populates an array of all questions' do
-      expect(assigns(:questions)).to match_array(questions)
+      expect(assigns(:questions)).to eq questions
     end
 
     it 'renders index view' do
@@ -129,17 +129,40 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    let(:question) { create(:question, user: @user) }
 
-    it 'deletes question' do
-      question.reload
-      expect { delete :destroy, params: { id: question }  }.to change(Question, :count).by(-1)
+    context 'author of the question' do
+      let!(:question) { create(:question, user: @user) }
+
+      it 'delete question' do
+        expect { delete :destroy, params: { id: question }  }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+
+      it 'view the flash message' do
+        delete :destroy, params: { id: question }
+        expect(flash[:notice]).to eq 'Your question successfully destroy'
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
-      expect(flash[:notice]).to eq 'Your question successfully destroy'
+    context 'not author of the question' do
+      it 'cannot delete question' do
+        question.reload
+        expect { delete :destroy, params: { id: question }  }.to change(Question, :count).by(0)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to question_path(question)
+      end
+
+      it 'view the flash message' do
+        delete :destroy, params: { id: question }
+        expect(flash[:alert]).to eq "You can't delete someone else's question"
+      end
     end
   end
 end

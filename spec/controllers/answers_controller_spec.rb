@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
   let(:question) { create(:question,  user: @user) }
-  let(:answer) { create(:answer, question: question, user: @user)}
+  let!(:answer) { create(:answer, question: question, user: @user)}
 
   describe 'GET #edit' do
     before { get :edit, params: { id: answer } }
@@ -22,6 +22,10 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(question.answers, :count).by(1)
+      end
+
+      it 'connection with a logged in user after saving' do
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }
         expect(assigns(:answer).user).to eq @user
       end
 
@@ -83,15 +87,38 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    it 'deletes question' do
-      answer.reload
-      expect { delete :destroy, params: { id:  answer } }.to change(Answer, :count).by(-1)
+    context 'author of the answer' do
+      it 'delete answer' do
+        expect { delete :destroy, params: { id:  answer } }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to question show' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question
+      end
+
+      it 'view the flash message' do
+        delete :destroy, params: { id: answer }
+        expect(flash[:notice]).to eq 'Your answer successfully destroy'
+      end
     end
 
-    it 'redirect to question show' do
-      delete :destroy, params: { id: answer }
-      expect(response).to redirect_to question_path(question)
-      expect(flash[:notice]).to eq 'Your answer successfully destroy'
+    context 'not author of the answer' do
+      let(:answer) { create(:answer, question: question, user: create(:user))}
+
+      it 'cannot delete answer' do
+        expect { delete :destroy, params: { id:  answer } }.to change(Answer, :count).by(0)
+      end
+
+      it 'redirect to question show' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question
+      end
+
+      it 'view the flash message' do
+        delete :destroy, params: { id: answer }
+        expect(flash[:alert]).to eq "You can't delete someone else's answer"
+      end
     end
   end
 end

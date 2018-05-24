@@ -6,13 +6,13 @@ feature 'Destroy answer', %q{
   I want to be able to destroy my answer
 } do
 
-  given(:user) { create_list(:user, 2) }
-  given(:question) { create(:question, user: user.first)}
-  given!(:answer_1) { create(:answer_various, user: user.first, question: question ) }
-  given!(:answer_2) { create(:answer_various, user: user.last, question: question) }
+  given(:users) { create_list(:user, 2) }
+  given(:question) { create(:question, user: users.first)}
+  given!(:answer_1) { create(:answer_various, user: users.first, question: question ) }
+  given!(:answer_2) { create(:answer_various, user: users.last, question: question) }
 
   scenario 'Authenticated user deletes his answer' do
-    sign_in(user.first)
+    sign_in(users.first)
     visit question_path(question)
 
     click_link('destroy', href: answer_path(answer_1))
@@ -22,7 +22,7 @@ feature 'Destroy answer', %q{
   end
 
   scenario "Authenticated user can't destroy not his answer" do
-    sign_in(user.first)
+    sign_in(users.first)
     visit question_path(question)
 
     expect(page).to_not have_link('destroy', href: answer_path(answer_2))
