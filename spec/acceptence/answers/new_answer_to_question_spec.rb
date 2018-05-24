@@ -9,7 +9,7 @@ feature 'Create the answer to the questions', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user to create the answer to the questions with valid parameter' do
+  scenario 'Authenticated user to create the answer to the questions with valid parameter', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -18,9 +18,10 @@ feature 'Create the answer to the questions', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your answer successfully created.', 'text text text'
+    expect(page).to have_field('Body', with: '')
   end
 
-  scenario 'Authenticated user to create the answer to the questions with invalid parameter' do
+  scenario 'Authenticated user to create the answer to the questions with invalid parameter', js: true do
     sign_in(user)
 
     visit question_path(question)

@@ -10,13 +10,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      @question.reload
-      @answers = @question.answers
-      render 'questions/show'
-    end
+    flash.now[:notice] = 'Your answer successfully created.' if @answer.save
   end
 
   def update

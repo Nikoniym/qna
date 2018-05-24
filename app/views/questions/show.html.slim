@@ -4,7 +4,7 @@ p = @question.body
   = link_to 'edit', edit_question_path(@question)
   '  |
   = link_to 'destroy', question_path(@question), method: :delete,  data: { confirm: 'Are you sure?' }
-ol
+ol.answers
   = render @answers
 hr
 = render 'answers/form'

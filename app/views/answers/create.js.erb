@@ -1,0 +1,7 @@
+<% if	 @answer.created_at?  %>
+  $('.answers').append('<%= j render 'answers/answer', answer: @answer %>');
+  $('.flash').html('<%= j render 'shared/flash' %>');
+  $('#answer_body').val('');
+<% else %>
+  $('#new_answer').prepend('<%= j render 'shared/errors', resource: @answer%>');
+<% end %>
