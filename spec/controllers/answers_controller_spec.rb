@@ -29,6 +29,11 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :create
       end
 
+      it 'connection with a logged in user after saving' do
+        post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(assigns(:answer).user).to eq @user
+      end
+
       it 'view the flash message' do
         post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
         expect(flash[:notice]).to eq 'Your answer successfully created.'
