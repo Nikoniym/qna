@@ -151,7 +151,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'not author of the question' do
       it 'cannot delete question' do
         question.reload
-        expect { delete :destroy, params: { id: question }  }.to change(Question, :count).by(0)
+        expect { delete :destroy, params: { id: question }  }.to_not change(Question, :count)
       end
 
       it 'redirect to index view' do

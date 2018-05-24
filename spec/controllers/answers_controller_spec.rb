@@ -107,7 +107,7 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer) { create(:answer, question: question, user: create(:user))}
 
       it 'cannot delete answer' do
-        expect { delete :destroy, params: { id:  answer } }.to change(Answer, :count).by(0)
+        expect { delete :destroy, params: { id:  answer } }.to_not change(Answer, :count)
       end
 
       it 'redirect to question show' do
