@@ -10,25 +10,25 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
-    flash.now[:notice] = 'Your answer successfully created.' if @answer.save
+    flash.now[:notice] = 'Your answer successfully created' if @answer.save
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      flash.now[:notice] = 'Your answer successfully update'
     else
-      render :edit
+      flash.now[:alert] = "You can't update someone else's answer"
     end
   end
 
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash[:notice] = 'Your answer successfully destroy'
+      flash.now[:notice] = 'Your answer successfully destroy'
     else
-      flash[:alert] = "You can't delete someone else's answer"
+      flash.now[:alert] = "You can't delete someone else's answer"
     end
-    redirect_to @answer.question
   end
 
   private

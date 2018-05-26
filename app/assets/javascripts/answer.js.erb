@@ -1,0 +1,15 @@
+function openForm() {
+  $('.edit-answer-link').on('click', function(e) {
+    e.preventDefault()
+    var answer_id = $(this).data('answerId')
+
+    $('.answer-' + answer_id + ' .link-group').hide()
+    $('.answer-' + answer_id + ' .answer-body').hide()
+
+    $('form#edit_answer_' + answer_id).show()
+  })
+}
+
+document.addEventListener('turbolinks:load', function () {
+  openForm()
+})

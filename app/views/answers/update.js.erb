@@ -1,0 +1,7 @@
+<% if @answer.errors.present? %>
+  $('.answer-<%=@answer.id %> .answer-errors').html('<%= j render 'shared/short_errors', resource: @answer%>');
+<% else %>
+  $(".answer-<%=@answer.id %>").replaceWith('<%= j render @answer %>');
+  $('.flash').html('<%= j render 'shared/flash' %>');
+  openForm();
+<% end %>

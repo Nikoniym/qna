@@ -1,6 +1,14 @@
-li
-  div = answer.body
+.answer-item class="answer-#{answer.id}"
+  .answer-body = answer.body
   - if current_user&.author_of?(answer)
-    = link_to 'edit', edit_answer_path(answer)
-    '  |
-    = link_to 'destroy', answer_path(answer), method: :delete,  data: { confirm: 'Are you sure?' }
+    .link-group
+      = link_to 'edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+      '  |
+      = link_to 'destroy', answer_path(answer), method: :delete,  data: { confirm: 'Are you sure?' }, remote: true
+    .row.form-group
+      .col-3
+        = form_for  answer, remote: true do |f|
+          .answer-errors
+          = f.label :body, 'Answer edit'
+          = f.text_field :body, class: 'form-control'
+          = f.submit 'Update', class: 'btn btn-primary mt-3'
