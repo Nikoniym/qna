@@ -15,9 +15,11 @@ feature 'Create the answer to the questions', %q{
     visit question_path(question)
 
     fill_in 'Body', with: 'text text text'
+
     click_on 'Create'
 
-    expect(page).to have_content 'Your answer successfully created.', 'text text text'
+    expect(page).to have_content 'Your answer successfully created'
+    expect(page).to have_content 'text text text'
     expect(page).to have_field('Body', with: '')
   end
 

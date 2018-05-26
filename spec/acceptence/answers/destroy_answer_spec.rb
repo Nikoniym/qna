@@ -11,7 +11,7 @@ feature 'Destroy answer', %q{
   given!(:answer_1) { create(:answer_various, user: users.first, question: question ) }
   given!(:answer_2) { create(:answer_various, user: users.last, question: question) }
 
-  scenario 'Authenticated user deletes his answer' do
+  scenario 'Authenticated user deletes his answer', js: true do
     sign_in(users.first)
     visit question_path(question)
 

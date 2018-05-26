@@ -1,9 +1,8 @@
 <% if	 @answer.persisted?  %>
-  $('.answers').append('<%= j render @answer %>');
+  $('.answers-list').append('<%= j render @answer %>');
   $('.flash').html('<%= j render 'shared/flash' %>');
-  $('#answer_body').val('');
-  $('.resource-errors').remove();
+  $('#new_answer #answer_body').val('');
+  $('.new-answer-errors').empty();
 <% else %>
-  $('.resource-errors').remove();
-  $('#new_answer').prepend('<%= j render 'shared/errors', resource: @answer%>');
+  $('.new-answer-errors').html('<%= j render 'shared/short_errors', resource: @answer%>');
 <% end %>

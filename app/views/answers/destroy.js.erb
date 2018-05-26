@@ -1,0 +1,7 @@
+<% if	 @answer.destroyed?  %>
+  $(".answer-<%=@answer.id %>").remove();
+  $('.flash').html('<%= j render 'shared/flash' %>');
+
+<% else %>
+  $('.flash').html('<%= j render 'shared/flash' %>');
+<% end %>
