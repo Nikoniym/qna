@@ -21,6 +21,10 @@ feature 'Best answer for author question', %q{
 
       expect(page).to have_content 'The answer was set best successfully'
 
+      within all('.answer-item').last do
+        expect(page).to_not have_content answers_1.last.body
+      end
+
       within all('.answer-item').first do
         expect(page).to have_content answers_1.last.body
         expect(page).to have_content 'Marked by the Asker as the best'
