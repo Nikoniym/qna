@@ -23,6 +23,7 @@ feature 'Best answer for author question', %q{
 
       within all('.answer-item').last do
         expect(page).to_not have_content answers_1.last.body
+        expect(page).to_not have_content 'Marked by the Asker as the best'
       end
 
       within all('.answer-item').first do
