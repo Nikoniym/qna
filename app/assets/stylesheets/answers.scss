@@ -5,3 +5,8 @@
 .best-link-wrapper {
   display: inline;
 }
+.best-answer:first-child {
+  .best-link-wrapper {
+    display: none;
+  }
+}
