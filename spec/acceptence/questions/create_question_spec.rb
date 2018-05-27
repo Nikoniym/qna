@@ -19,7 +19,8 @@ feature 'Create questions', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your question successfully created.'
-    expect(page).to have_content 'Test questions', 'text text text'
+    expect(page).to have_content 'Test questions'
+    expect(page).to have_content 'text text text'
   end
 
   scenario 'Authenticated user create the questions with invalid parameter' do

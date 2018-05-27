@@ -1,14 +1,20 @@
-.answer-item class="answer-#{answer.id}"
+.answer-item.mt-3 class="answer-#{answer.id}"
+  - if answer.best
+    .best-label.mb-1.mt-3  Marked by the Asker as the best
   .answer-body = answer.body
-  - if current_user&.author_of?(answer)
-    .link-group
+  .link-group
+    - if current_user&.author_of?(answer.question)
+      .best-link-wrapper
+        = link_to 'best', set_best_answer_path(answer), class: 'best-answer-link', data: {answer_id: answer.id}, remote: true, method: :put
+        '  |
+    - if current_user&.author_of?(answer)
       = link_to 'edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
       '  |
       = link_to 'destroy', answer_path(answer), method: :delete,  data: { confirm: 'Are you sure?' }, remote: true
-    .row.form-group
-      .col-3
-        = form_for  answer, remote: true do |f|
-          .answer-errors
-          = f.label :body, 'Answer edit'
-          = f.text_field :body, class: 'form-control'
-          = f.submit 'Update', class: 'btn btn-primary mt-3'
+  .row.form-group
+    .col-3
+      = form_for  answer, remote: true do |f|
+        .answer-errors
+        = f.label :body, 'Answer edit'
+        = f.text_field :body, class: 'form-control'
+        = f.submit 'Update', class: 'btn btn-primary mt-3'

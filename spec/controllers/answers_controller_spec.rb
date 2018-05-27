@@ -143,4 +143,38 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'Set best answer #set_best' do
+    before { put :set_best, params: { id:  answer }, format: :js }
+    context 'author of the question' do
+      it 'set best answer' do
+       expect(assigns(:answer).best).to eq true
+      end
+
+      it 'render set_best template' do
+        expect(response).to render_template :set_best
+      end
+
+      it 'view the flash message' do
+        expect(flash[:notice]).to eq 'The answer was set best successfully'
+      end
+    end
+
+    context 'not author of the question' do
+      let(:question) { create(:question,  user: create(:user)) }
+      let(:answer) { create(:answer, question: question, user: @user) }
+
+      it 'cannot delete answer' do
+        expect(assigns(:answer).best).to eq false
+      end
+
+      it 'render set_best template' do
+        expect(response).to render_template :set_best
+      end
+
+      it 'view the flash message' do
+        expect(flash[:alert]).to eq "You can't set the best answer not for your question"
+      end
+    end
+  end
 end

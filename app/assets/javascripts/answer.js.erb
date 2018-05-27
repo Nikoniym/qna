@@ -9,7 +9,5 @@ function openForm() {
     $('form#edit_answer_' + answer_id).show()
   })
 }
-
-document.addEventListener('turbolinks:load', function () {
-  openForm()
-})
+$(document).ready(openForm);
+$(document).on('turbolinks:load', openForm);

@@ -1,15 +1,13 @@
 #openForm = ->
-#  $('.edit-answer-link').on 'click', (e) ->
+#  $('.answers-list').on 'click', '.edit-answer-link', (e) ->
 #    e.preventDefault()
 #    answer_id = $(this).data('answerId')
-##    $('.answer-' + answer_id + ' .link-group').hide()
-##    $('.answer-' + answer_id + ' .answer-body').hide()
-#    console.log answer_id
+#    $('.answer-' + answer_id + ' .link-group').hide()
+#    $('.answer-' + answer_id + ' .answer-body').hide()
 #    $('form#edit_answer_' + answer_id).show()
 #
-#$ ->
-#  openForm()
-
+#$(document).ready(openForm)
+#$(document).on('turbolinks:load', openForm)
 
 
 
