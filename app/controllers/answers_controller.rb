@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_answer, only: %i[edit update destroy]
+  before_action :find_answer, only: %i[edit update destroy set_best]
   before_action :find_question, only: :create
 
   def edit
@@ -28,6 +28,15 @@ class AnswersController < ApplicationController
       flash.now[:notice] = 'Your answer successfully destroy'
     else
       flash.now[:alert] = "You can't delete someone else's answer"
+    end
+  end
+
+  def set_best
+    if current_user.author_of?(@answer.question)
+      @answer.set_best!
+      flash.now[:notice] = 'The answer was set best successfully'
+    else
+      flash.now[:alert] = "You can't set the best answer not for your question"
     end
   end
 

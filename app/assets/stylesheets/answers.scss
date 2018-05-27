@@ -1,3 +1,7 @@
-.edit_answer {
+.edit_answer,
+.answer-item:nth-child(n+2)  .best-label {
   display: none;
+}
+.best-link-wrapper {
+  display: inline;
 }
