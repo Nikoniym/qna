@@ -8,7 +8,3 @@
 #
 #$(document).ready(openForm)
 #$(document).on('turbolinks:load', openForm)
-
-
-
-

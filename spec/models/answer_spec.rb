@@ -6,7 +6,6 @@ RSpec.describe Answer, type: :model do
 
   it { should validate_presence_of :body }
 
-
   describe 'test method #set_best! with order' do
     let(:user) { create(:user) }
 
