@@ -1,4 +1,4 @@
-.answer-item.mt-3 class="answer-#{answer.id}"
+.answer-item.mt-3 class="answer-#{answer.id}" class=('best-answer' if answer.best)
   - if answer.best
     .best-label.mb-1.mt-3  Marked by the Asker as the best
   .answer-body = answer.body

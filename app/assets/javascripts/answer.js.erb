@@ -1,5 +1,5 @@
 function openForm() {
-  $('.edit-answer-link').on('click', function(e) {
+  $('.answers-list').on('click', '.edit-answer-link', function(e) {
     e.preventDefault()
     var answer_id = $(this).data('answerId')
 

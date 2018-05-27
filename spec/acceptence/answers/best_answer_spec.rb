@@ -23,12 +23,42 @@ feature 'Best answer for author question', %q{
 
       within all('.answer-item').last do
         expect(page).to_not have_content answers_1.last.body
-        expect(page).to_not have_content 'Marked by the Asker as the best'
       end
 
       within all('.answer-item').first do
         expect(page).to have_content answers_1.last.body
         expect(page).to have_content 'Marked by the Asker as the best'
+        expect(page).to_not have_link 'best'
+      end
+    end
+
+    scenario 'Set best answer for one answer', js: true do
+      visit question_path(question_1)
+
+      click_link 'best', href: set_best_answer_path(answers_1.last)
+
+      answers_1.each do |answer|
+        within (".answer-#{answer.id}") do
+          if answer == answers_1.last
+            expect(page).to have_content 'Marked by the Asker as the best'
+          else
+            expect(page).to_not have_content 'Marked by the Asker as the best'
+          end
+        end
+      end
+    end
+
+    scenario "Don't show the link after you update the best answer", js: true do
+      visit question_path(question_1)
+
+      within (".answer-#{answers_1.first.id}") do
+        click_link 'best'
+
+        sleep(0.5)
+
+        click_link 'edit'
+        click_on 'Update'
+
         expect(page).to_not have_link 'best'
       end
     end
