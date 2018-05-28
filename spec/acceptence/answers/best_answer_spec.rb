@@ -54,7 +54,7 @@ feature 'Best answer for author question', %q{
       within (".answer-#{answers_1.first.id}") do
         click_link 'best'
 
-        sleep(0.5)
+        sleep(0.1)
 
         click_link 'edit'
         click_on 'Update'
