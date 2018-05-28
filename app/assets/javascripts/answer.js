@@ -9,5 +9,5 @@ function openForm() {
     $('form#edit_answer_' + answer_id).show()
   })
 }
-$(document).ready(openForm);
+
 $(document).on('turbolinks:load', openForm);
