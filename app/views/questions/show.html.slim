@@ -1,5 +1,6 @@
 h1 = @question.title
 p = @question.body
+= render 'shared/attachments/attachment_list', resource: @question
 - if current_user&.author_of?(@question)
   = link_to 'edit', edit_question_path(@question)
   '  |
@@ -7,4 +8,6 @@ p = @question.body
 .answers-list
   = render @answers
 hr
-= render 'answers/form'
+.row
+  .col-4
+    = render 'answers/form'

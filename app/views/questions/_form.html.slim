@@ -1,7 +1,11 @@
-= form_for @question do |f|
-  = render 'shared/errors', resource: @question
-  = f.label :title
-  = f.text_field :title
-  = f.label :body, 'Text'
-  = f.text_area :body
-  = f.submit 'Create'
+.row.form-group
+  .col-3
+    = form_for @question do |f|
+      = render 'shared/errors', resource: @question
+      = f.label :title, class: 'mt-3'
+      = f.text_field :title, class: 'form-control'
+      = f.label :body, 'Text', class: 'mt-3'
+      = f.text_area :body, class: 'form-control'
+      = render 'shared/attachments/attachment_form', form: f
+
+      = f.submit 'Create', class: 'btn btn-primary mt-3'

@@ -2,6 +2,7 @@
   - if answer.best
     .best-label.mb-1.mt-3  Marked by the Asker as the best
   .answer-body = answer.body
+  = render 'shared/attachments/attachment_list', resource: answer
   .link-group
     - if current_user&.author_of?(answer.question)
       .best-link-wrapper
@@ -17,4 +18,5 @@
         .answer-errors
         = f.label :body, 'Answer edit'
         = f.text_field :body, class: 'form-control'
+
         = f.submit 'Update', class: 'btn btn-primary mt-3'

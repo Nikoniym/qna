@@ -1,5 +1,6 @@
 = form_for [@question, @answer], remote: true do |f|
   .new-answer-errors
   = f.label :body
-  = f.text_field :body
-  = f.submit 'Create'
+  = f.text_field :body, class: 'form-control'
+  = render 'shared/attachments/attachment_form', form: f
+  = f.submit 'Create', class: 'btn btn-primary mt-3'

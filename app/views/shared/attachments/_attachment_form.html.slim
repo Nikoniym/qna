@@ -1,0 +1,4 @@
+p.mt-3 Attachments:
+= form.fields_for :attachments do |a|
+  = a.label :file
+  = a.file_field :file, class: 'form-control'
