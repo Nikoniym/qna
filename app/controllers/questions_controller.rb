@@ -20,7 +20,6 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question.attachments.build
   end
 
   def create
@@ -29,6 +28,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
+      @question.attachments.build
       render :new
     end
   end

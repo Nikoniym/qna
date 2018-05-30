@@ -13,13 +13,29 @@ feature 'Add files to question', %q{
     visit new_question_path
   end
 
-  scenario 'User adds file when asks question' do
+  scenario 'User adds file when asks question with valid parameter', js: true do
     fill_in 'Title', with: 'Test question'
     fill_in 'Text', with: 'text text text'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-    click_on 'Create'
-    # save_and_open_page
+    click_link 'add file'
+    click_link 'add file'
+    inputs_list = find('#new_question').all("input[type='file']")
+    inputs_list.first.set("#{Rails.root}/spec/spec_helper.rb")
+    inputs_list.last.set("#{Rails.root}/spec/rails_helper.rb")
 
-    expect(page).to have_link 'spec_helper.rb', href: Attachment.last.file.url
+    click_on 'Create'
+
+    expect(page).to have_link 'spec_helper.rb'
+    expect(page).to have_link 'rails_helper.rb'
+  end
+
+  scenario 'User adds file when asks question with invalid parameter', js: true do
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Text', with: 'text text text'
+    click_link 'add file'
+
+    click_on 'Create'
+
+    expect(page).to have_content "Attachments file can't be blank"
+    expect(page).to have_link 'add file'
   end
 end

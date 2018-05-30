@@ -2,7 +2,7 @@
   - if answer.best
     .best-label.mb-1.mt-3  Marked by the Asker as the best
   .answer-body = answer.body
-  = render 'shared/attachments/attachment_list', resource: answer
+  = render 'attachments/attachment_list', resource: answer
   .link-group
     - if current_user&.author_of?(answer.question)
       .best-link-wrapper

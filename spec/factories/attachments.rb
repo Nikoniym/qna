@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :attachment do
-    file "MyString"
+    file { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'attachments.rb')) }
   end
 end
