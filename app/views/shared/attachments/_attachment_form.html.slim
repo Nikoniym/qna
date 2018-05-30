@@ -1,4 +1,6 @@
 p.mt-3 Attachments:
-= form.fields_for :attachments do |a|
-  = a.label :file
-  = a.file_field :file, class: 'form-control'
+#tasks
+  = form.fields_for :attachments do |attachment|
+    = render 'shared/attachments/attachment_fields', f: attachment
+    = link_to_add_association 'add task', form, :attachments, partial: 'shared/attachments/attachment_fields', locals: {f: attachment}
+

@@ -8,7 +8,7 @@ feature 'Add files to answer', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, user: user) }
 
   background do
     sign_in(user)
@@ -16,12 +16,12 @@ feature 'Add files to answer', %q{
   end
 
   scenario 'User adds file to answer', js: true do
-    fill_in 'Your answer', with: 'My answer'
+    fill_in 'Body', with: 'My answer'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
 
-    within '.answers' do
-      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+    within '.answers-list' do
+      expect(page).to have_link 'spec_helper.rb', href: Attachment.last.file.url
     end
   end
 end
