@@ -5,7 +5,6 @@ feature 'Create the answer to the questions', %q{
   As an authenticated user
   I want to be able to ask the answer to the questions
 } do
-
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
 

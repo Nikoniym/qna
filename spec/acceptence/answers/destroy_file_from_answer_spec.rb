@@ -39,7 +39,6 @@ feature 'Destroy files to answer', %q{
     end
   end
 
-
   scenario 'Unauthorized guest can not destroy file from the answer' do
     visit question_path(question)
     expect(page).to_not have_link 'delete'

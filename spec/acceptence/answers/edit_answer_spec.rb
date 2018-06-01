@@ -5,7 +5,6 @@ feature 'Edit the answer', %q{
   As an authenticated user and author answer
   I want to be able to edit my answer
 } do
-
   given(:users) { create_list(:user, 2) }
   given!(:question) { create(:question, user: users.first) }
   given!(:answer_1) { create(:answer, question: question, user: users.first) }

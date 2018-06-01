@@ -5,7 +5,6 @@ feature 'Destroy question', %q{
   As an authenticated user
   I want to be able to destroy my question
 } do
-
   given(:users) { create_list(:user, 2) }
   given(:question_1) { create(:question_various, user: users.first) }
   given(:question_2) { create(:question_various, user: users.last) }
@@ -27,8 +26,6 @@ feature 'Destroy question', %q{
 
     expect(page).to_not have_link 'destroy'
   end
-
-
 
   scenario 'Unauthorized guest can not destroy a question' do
     visit question_path(question_1)

@@ -5,7 +5,6 @@ feature 'Create questions', %q{
   As an authenticated user
   I want to be able to ask the questions
 } do
-
   given(:user) { create(:user) }
 
   scenario 'Authenticated user create the questions with valid parameter' do

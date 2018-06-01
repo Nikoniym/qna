@@ -5,7 +5,6 @@ feature 'Add files to question', %q{
   As an question's author
   I'd like to be able to attach files
 } do
-
   given(:user) { create(:user) }
 
   background do

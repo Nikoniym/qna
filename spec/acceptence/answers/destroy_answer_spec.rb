@@ -5,7 +5,6 @@ feature 'Destroy answer', %q{
   As an authenticated user
   I want to be able to destroy my answer
 } do
-
   given(:users) { create_list(:user, 2) }
   given(:question) { create(:question, user: users.first)}
   given!(:answer_1) { create(:answer_various, user: users.first, question: question ) }
@@ -27,8 +26,6 @@ feature 'Destroy answer', %q{
 
     expect(page).to_not have_link('destroy', href: answer_path(answer_2))
   end
-
-
 
   scenario 'Unauthorized guest can not destroy a answer' do
     visit question_path(question)

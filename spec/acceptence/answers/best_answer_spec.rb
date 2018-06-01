@@ -74,5 +74,4 @@ feature 'Best answer for author question', %q{
 
     expect(page).to_not have_link 'best'
   end
-
 end

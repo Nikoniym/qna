@@ -5,7 +5,6 @@ feature 'User log_out', %q{
   As an authenticated user
   I want be able to log out
  } do
-
   given(:user) { create(:user) }
 
   scenario 'Registered user try to log out' do

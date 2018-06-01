@@ -6,7 +6,6 @@ feature 'Destroy files to question', %q{
   As an question's author
   I want to be able to destroy file from your question
 } do
-
   given(:users) { create_list(:user, 2) }
   given(:question_1) { create(:question_various, user: users.first) }
   given(:question_2) { create(:question_various, user: users.last) }
@@ -37,7 +36,6 @@ feature 'Destroy files to question', %q{
       expect(page).to have_link attachment_2.file.filename
     end
   end
-
 
   scenario 'Unauthorized guest can not destroy file from the answer' do
     visit question_path(question_1)
