@@ -27,15 +27,4 @@ feature 'Add files to question', %q{
     expect(page).to have_link 'spec_helper.rb'
     expect(page).to have_link 'rails_helper.rb'
   end
-
-  scenario 'User adds file when asks question with invalid parameter', js: true do
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Text', with: 'text text text'
-    click_link 'add file'
-
-    click_on 'Create'
-
-    expect(page).to have_content "Attachments file can't be blank"
-    expect(page).to have_link 'add file'
-  end
 end

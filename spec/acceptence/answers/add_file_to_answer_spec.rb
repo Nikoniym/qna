@@ -29,13 +29,4 @@ feature 'Add files to answer', %q{
       expect(page).to have_link 'rails_helper.rb'
     end
   end
-
-  scenario 'User adds file to answer with invalid parameter', js: true do
-    fill_in 'Body', with: 'text text text'
-    click_link 'add file'
-
-    click_on 'Create'
-
-    expect(page).to have_content "Attachments file can't be blank"
-  end
 end

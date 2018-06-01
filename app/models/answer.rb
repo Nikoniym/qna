@@ -3,7 +3,7 @@ class Answer < ApplicationRecord
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
   default_scope { order(best: :desc) }
 
