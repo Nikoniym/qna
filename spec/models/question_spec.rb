@@ -9,7 +9,6 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
 
-
   it_behaves_like 'valued' do
     let(:resource) { create(:question, user: create(:user)) }
   end

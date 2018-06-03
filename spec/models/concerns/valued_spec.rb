@@ -4,7 +4,6 @@ shared_examples_for 'valued' do
 
   it { is_expected.to callback(:create_rating).after(:create) }
 
-
   let (:user) { create(:user) }
 
   it '#number' do
