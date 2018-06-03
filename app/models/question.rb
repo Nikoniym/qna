@@ -1,13 +1,10 @@
 class Question < ApplicationRecord
+  include Valuable
+
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
-  belongs_to :user
-  has_many :ratings, as: :ratingable, dependent: :destroy
-
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
-  accepts_nested_attributes_for :ratings
+  belongs_to :user
 
   validates :title, :body, presence: true
-
-
 end

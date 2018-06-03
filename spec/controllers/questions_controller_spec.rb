@@ -178,4 +178,10 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'valuable' do
+    sign_in_user
+    let(:resource) { create(:question, user: @user) }
+    let(:else_resource) { create(:question, user: create(:user)) }
+  end
 end

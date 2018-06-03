@@ -12,6 +12,10 @@
       = link_to 'edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
       '  |
       = link_to 'destroy', answer_path(answer), method: :delete,  data: { confirm: 'Are you sure?' }, remote: true
+    - else
+      = render 'shared/rating', resource: answer
+    br
+    b.rating-count = answer.number
   .row.form-group
     .col-3
       = form_for  answer, remote: true do |f|

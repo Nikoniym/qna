@@ -1,4 +1,5 @@
 FactoryBot.define do
-  factory :rating do
+  factory :rating_user do
+    
   end
 end

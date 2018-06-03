@@ -177,4 +177,10 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'valuable' do
+
+    let(:resource) { create(:answer, question: question, user: @user) }
+    let(:else_resource) { create(:answer, question: question, user: create(:user)) }
+  end
 end

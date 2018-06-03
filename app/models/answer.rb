@@ -1,11 +1,10 @@
 class Answer < ApplicationRecord
+  include Valuable
+
   belongs_to :question
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
-  has_many :ratings, as: :ratingable, dependent: :destroy
-
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
-  accepts_nested_attributes_for :ratings
 
   default_scope { order(best: :desc) }
 
