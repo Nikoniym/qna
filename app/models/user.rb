@@ -6,8 +6,7 @@ class User < ApplicationRecord
 
   has_many :questions
   has_many :answers
-  has_many :rating_users
-  has_many :ratings, through: :rating_users
+  has_many :ratings
 
   def author_of?(object)
     object.user_id == id

@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   concern :rating do
     member do
-      put :put_like
-      put :put_dislike
+      put :like
+      put :dislike
       put :cancel_vote
     end
   end

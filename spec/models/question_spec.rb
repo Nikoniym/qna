@@ -10,7 +10,8 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of :body }
 
   it_behaves_like 'valued' do
-    let(:resource) { create(:question, user: create(:user)) }
+    let(:user) { create(:user) }
+    let(:resource) { create(:question, user: user) }
   end
 end
 

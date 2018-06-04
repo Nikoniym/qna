@@ -1,5 +1,5 @@
-= link_to 'like', "#{polymorphic_path(resource)}/put_like", method: :put, class: 'rating-link', remote: true
+= link_to 'like', "#{polymorphic_path(resource)}/like", method: :put, class: 'rating-link', remote: true
 '  |
-= link_to 'dislike', "#{polymorphic_path(resource)}/put_dislike", method: :put, class: 'rating-link', remote: true
+= link_to 'dislike', "#{polymorphic_path(resource)}/dislike", method: :put, class: 'rating-link', remote: true
 '  |
 = link_to 'cancel vote', "#{polymorphic_path(resource)}/cancel_vote", method: :put, class: 'rating-link', remote: true

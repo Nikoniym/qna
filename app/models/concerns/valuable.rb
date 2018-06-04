@@ -2,35 +2,33 @@ module Valuable
   extend ActiveSupport::Concern
 
   included do
-    has_one :rating, as: :ratingable, dependent: :destroy
-    after_create :create_rating
+    has_many :ratings, as: :ratingable, dependent: :destroy
   end
 
   def number
-    rating.rating_count
+    ratings.present? ? ratings.pluck(:like).sum : 0
   end
 
   def set_like?(user)
-    rating.rating_users.where( like: true, user: user ).present?
+    ratings.where(like: 1, user: user ).present?
+
   end
 
   def set_dislike?(user)
-    rating.rating_users.where(like: false, user: user).present?
+    ratings.where(like: -1, user: user).present?
   end
 
   def set_like!(user)
     transaction do
       destroy_dislike(user) if set_dislike?(user)
-      rating.update(rating_count: number + 1)
-      rating.rating_users.create!(like: true, user: user)
+      ratings.create!(like: 1, user: user)
     end
   end
 
   def set_dislike!(user)
     transaction do
       destroy_like(user) if set_like?(user)
-      rating.update(rating_count: number - 1)
-      rating.rating_users.create!(like: false, user: user)
+      ratings.create!(like: -1, user: user)
     end
   end
 
@@ -39,25 +37,33 @@ module Valuable
     destroy_like(user) if set_like?(user)
   end
 
-  private
-
-  def create_rating
-    Rating.create(ratingable: self)
+  def like?(user)
+    !user.author_of?(self) && !set_like?(user)
   end
 
+  def dislike?(user)
+    !user.author_of?(self) && !set_dislike?(user)
+  end
+
+  def cancel_vote?(user)
+    !user.author_of?(self) && (set_dislike?(user) || set_like?(user))
+  end
+
+  private
+
   def destroy_dislike(user)
-    rating.update(rating_count: number + 1) if rating.rating_users.find_by(like: false, user: user).destroy
+    ratings.find_by(like: -1, user: user).destroy
   end
 
   def destroy_like(user)
-    rating.update(rating_count: number - 1) if rating.rating_users.find_by(like: true, user: user).destroy
+    ratings.find_by(like: 1, user: user).destroy
   end
 
-  def like
-    rating.rating_users.where(like: true).count
-  end
-
-  def dislike
-    rating.rating_users.where(like: false).count
-  end
+  # def like
+  #   ratings.where(like: 1).count
+  # end
+  #
+  # def dislike
+  #   ratings.where(like: -1).count
+  # end
 end
