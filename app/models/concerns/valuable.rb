@@ -19,15 +19,19 @@ module Valuable
   end
 
   def set_like!(user)
-    destroy_dislike(user) if set_dislike?(user)
-    rating.update(rating_count: number + 1)
-    rating.rating_users.create!(like: true, user: user)
+    transaction do
+      destroy_dislike(user) if set_dislike?(user)
+      rating.update(rating_count: number + 1)
+      rating.rating_users.create!(like: true, user: user)
+    end
   end
 
   def set_dislike!(user)
-    destroy_like(user) if set_like?(user)
-    rating.update(rating_count: number - 1)
-    rating.rating_users.create!(like: false, user: user)
+    transaction do
+      destroy_like(user) if set_like?(user)
+      rating.update(rating_count: number - 1)
+      rating.rating_users.create!(like: false, user: user)
+    end
   end
 
   def delete_vote!(user)
