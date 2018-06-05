@@ -6,7 +6,7 @@ module Valued
   end
 
   def like
-    if @resource.like?(current_user)
+    if @resource.can_like?(current_user)
       @resource.set_like!(current_user)
 
       respond_to do |format|
@@ -20,7 +20,7 @@ module Valued
   end
 
   def dislike
-    if @resource.dislike?(current_user)
+    if @resource.can_dislike?(current_user)
       @resource.set_dislike!(current_user)
       respond_to do |format|
         format.json { render json: responce(:notice, "This #{resource_name} successfully dislike") }
@@ -33,7 +33,7 @@ module Valued
   end
 
   def cancel_vote
-    if @resource.cancel_vote?(current_user)
+    if @resource.can_cancel_vote?(current_user)
       @resource.delete_vote!(current_user)
       respond_to do |format|
         format.json { render json: responce(:notice, "Voting for the #{resource_name} is canceled successfully") }
