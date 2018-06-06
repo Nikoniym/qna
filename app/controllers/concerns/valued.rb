@@ -8,7 +8,6 @@ module Valued
   def like
     if @resource.can_like?(current_user)
       @resource.set_like!(current_user)
-
       respond_to do |format|
         format.json { render json: responce(:notice, "This #{resource_name} successfully like")  }
       end

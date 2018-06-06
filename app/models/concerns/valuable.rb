@@ -19,22 +19,22 @@ module Valuable
 
   def set_like!(user)
     transaction do
-      destroy_dislike(user) if set_dislike?(user)
+      destroy_dislike(user)
       ratings.create!(like: 1, user: user)
     end
   end
 
   def set_dislike!(user)
     transaction do
-      destroy_like(user) if set_like?(user)
+      destroy_like(user)
       ratings.create!(like: -1, user: user)
     end
   end
 
   def delete_vote!(user)
     transaction do
-      destroy_dislike(user) if set_dislike?(user)
-      destroy_like(user) if set_like?(user)
+      destroy_dislike(user)
+      destroy_like(user)
     end
   end
 
@@ -53,10 +53,10 @@ module Valuable
   private
 
   def destroy_dislike(user)
-    ratings.find_by(like: -1, user: user).destroy!
+    ratings.find_by(like: -1, user: user)&.destroy!
   end
 
   def destroy_like(user)
-    ratings.find_by(like: 1, user: user).destroy!
+    ratings.find_by(like: 1, user: user)&.destroy!
   end
 end
