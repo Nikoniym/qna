@@ -1,4 +1,4 @@
-div class=("question-#{@question.id}")
+.question class=("question-#{@question.id}") data-question-id="#{@question.id}"
   h1 = @question.title
   p = @question.body
   = render 'attachments/attachment_list', resource: @question
@@ -10,9 +10,10 @@ div class=("question-#{@question.id}")
     = render 'shared/rating', resource: @question
   br
   b.rating-count = @question.number
-.answers-list
-  = render @answers
-hr
-.row
-  .col-4
-    = render 'answers/form'
+  hr
+  .answers-list
+    = render @answers
+  hr
+  .row
+    .col-4
+      = render 'answers/form'

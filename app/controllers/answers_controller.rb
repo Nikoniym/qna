@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_answer, only: %i[edit update destroy set_best]
   before_action :find_question, only: :create
+  after_action :publish_answer, only: :create
 
   def edit
   end
@@ -43,6 +44,15 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+        "answer_for_question_#{@answer.question_id}",
+        {answer: @answer, like_count: @answer.number, attachments: @answer.attachments, question_user_id: @answer.question.user_id}
+    )
+  end
 
   def find_answer
     @answer = Answer.find(params[:id])

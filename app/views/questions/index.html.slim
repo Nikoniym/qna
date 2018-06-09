@@ -1,7 +1,5 @@
-= link_to 'Ask question', new_question_path
+.text-center
+  = link_to 'Ask question', new_question_path
 .row.mt-3.justify-content-center
-  table.table.table-bordered.col-10
-    tr
-      th Questions
-      th  Action
+  .questions-list.collection.col-10
     = render @questions

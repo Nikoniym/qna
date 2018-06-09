@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update destroy]
+  after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
@@ -52,6 +53,18 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    return if @question.errors.any?
+    # gon_user
+    ActionCable.server.broadcast(
+        'questions',
+        ApplicationController.render(
+            partial: 'questions/question',
+            locals: { question: @question }
+        )
+    )
+  end
 
   def attachment_build
     @question.attachments.build

@@ -1,0 +1,25 @@
+.answer-item.mt-3 class="answer-#{@answer.id}"
+  .answer-body = @answer.body
+  - if @attachments.length > 0
+    p Attachments:
+    ul
+      - for a in @attachments
+        li class=("attachment-#{a.id}")
+          a href="#{a.file.url}" = a.file.url.split('/').pop()
+
+  .link-group
+    - if gon.user_id == @question_user_id
+      .best-link-wrapper
+        a.best-answer-link href="/answers/#{@answer.id}/set_best" data-remote='true' data-answer-id="#{@answer.id}" data-method='put'  best
+        '  |
+
+    a class="rating-link" data-remote="true" rel="nofollow" data-method="put" href="/answers/#{@answer.id}/like" like
+    '  |
+    a class="rating-link" data-remote="true" rel="nofollow" data-method="put" href="/answers/#{@answer.id}/dislike" dislike
+    '  |
+    a class="rating-link" data-remote="true" rel="nofollow" data-method="put" href="/answers/#{@answer.id}/cancel_vote" cancel vote
+
+    br
+    b.rating-count = @like_count
+
+

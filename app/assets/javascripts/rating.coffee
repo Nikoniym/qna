@@ -1,4 +1,4 @@
-ajaxRequest  = ->
+@ajaxRequest  = ->
   $('.rating-link').bind 'ajax:success', (e) ->
     [data, status, xhr] = e.detail
 
@@ -18,4 +18,6 @@ ajaxRequest  = ->
       $(klass + ' .rating-count').text(data.count)
       $('.flash').html(message)
 
-$(document).on('turbolinks:load', ajaxRequest)
+
+$(document).on 'turbolinks:load', ->
+  ajaxRequest()

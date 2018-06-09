@@ -41,4 +41,40 @@ feature 'Create the answer to the questions', %q{
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
+
+  context "mulitple sessions" do
+    scenario "question appears on another user's page", :js do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Body', with: 'text text text'
+
+        click_link 'add file'
+        attach_file "#{Rails.root}/spec/spec_helper.rb"
+
+        click_on 'Create'
+
+        expect(page).to have_link 'spec_helper.rb'
+        expect(page).to have_content 'text text text'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'text text text'
+        expect(page).to have_link 'spec_helper.rb'
+
+        within('.answer-item') do
+          click_link 'like'
+        end
+
+        expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      end
+    end
+  end
 end
