@@ -21,3 +21,8 @@
 
     br
     b.rating-count = @like_count
+
+  .answer-comments-list
+    h6 Comments:
+    ul
+    a class="add-comment-link" data-remote="true" href="/answers/#{@answer.id}/new_comment" add comment
