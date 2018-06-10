@@ -1,9 +1,14 @@
 class QuestionsController < ApplicationController
   include Valued
+  include Commented
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update destroy]
   after_action :publish_question, only: :create
+
+  def create_comment
+
+  end
 
   def index
     @questions = Question.all

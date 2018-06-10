@@ -1,0 +1,9 @@
+<% if	 @comment.persisted?  %>
+  $('<%= @element %> .comment-form').remove();
+  $('<%= @element %> .add-comment-link').show();
+  $('<%= @element %> ul').append('<%= j render @comment %>');
+  $('.flash').html('<%= j render 'shared/flash' %>');
+  $('<%= @element %> .comment-errors').empty();
+<% else %>
+  $('.comment-errors').html('<%= j render 'shared/short_errors', resource: @comment%>');
+<% end %>

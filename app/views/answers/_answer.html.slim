@@ -16,11 +16,10 @@
       = render 'shared/rating', resource: answer
     br
     b.rating-count = answer.number
-  .row.form-group
-    .col-3
-      = form_for  answer, remote: true do |f|
-        .answer-errors
-        = f.label :body, 'Answer edit'
-        = f.text_field :body, class: 'form-control'
+  = render 'answers/form_edit', answer: answer
+  .answer-comments-list
+    h6 Comments:
+    ul
+      = render answer.comments
+    = link_to 'add comment', answer_new_comment_path(answer), class: 'add-comment-link', remote: true
 
-        = f.submit 'Update', class: 'btn btn-primary mt-3'

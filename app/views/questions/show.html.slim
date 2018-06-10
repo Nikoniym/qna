@@ -10,6 +10,11 @@
     = render 'shared/rating', resource: @question
   br
   b.rating-count = @question.number
+  .question-comments-list
+    h6 Comments:
+    ul
+      = render @question.comments
+    = link_to 'add comment', question_new_comment_path(@question), class: 'add-comment-link', remote: true
   hr
   .answers-list
     = render @answers

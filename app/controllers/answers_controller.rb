@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   include Valued
+  include Commented
 
   before_action :authenticate_user!
   before_action :find_answer, only: %i[edit update destroy set_best]

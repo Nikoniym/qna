@@ -1,0 +1,9 @@
+.row.form-group.comment-form
+  .col-3
+    = form_for @comment, remote: true do |f|
+      .comment-errors
+      = f.hidden_field(:commentable_id)
+      = f.hidden_field(:commentable_type)
+      = f.label :body
+      = f.text_field :body, class: 'form-control'
+      = f.submit 'Comment', class: 'btn btn-primary mt-3'

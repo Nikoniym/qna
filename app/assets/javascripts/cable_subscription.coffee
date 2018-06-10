@@ -34,6 +34,22 @@
         ajaxRequest()
   }
 
+  App.cable.subscriptions.create "CommentsChannel", {
+    connected: ->
+      console.log 'connected comments'
+      @follow()
+
+    follow: ->
+      questionId = $('.question').data('question-id')
+      console.log questionId
+      @perform 'follow', question_id: questionId
+
+    received: (data) ->
+      if data.comment.user_id != gon.user_id
+        console.log 'responce comment'
+        $(data.element + ' ul').append(JST["templates/comment"]({comment: data.comment}))
+  }
+
 $(document).on 'turbolinks:load', ->
   actionCable()
 

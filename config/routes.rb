@@ -13,8 +13,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :rating do
-    resources :answers, except: %i[index new show], concerns: :rating, shallow: true do
+  concern :comment do
+    get :new_comment
+  end
+
+  resources :comments, only: :create
+
+  resources :questions, concerns: [:rating, :comment] do
+    resources :answers, except: %i[index new show], concerns: [:rating, :comment], shallow: true do
       put :set_best, on: :member
     end
   end

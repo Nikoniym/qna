@@ -2,11 +2,18 @@
 .answer-item:nth-child(n+2)  .best-label {
   display: none;
 }
+
 .best-link-wrapper {
   display: inline;
 }
+
 .best-answer:first-child {
   .best-link-wrapper {
     display: none;
   }
+}
+
+.answer-item {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }

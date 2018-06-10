@@ -178,8 +178,11 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  it_behaves_like 'valuable' do
+  describe 'concerns' do
     let(:resource) { create(:answer, question: question, user: @user) }
     let(:else_resource) { create(:answer, question: question, user: create(:user)) }
+
+    it_behaves_like 'valuable'
+    it_behaves_like 'commentable'
   end
 end
