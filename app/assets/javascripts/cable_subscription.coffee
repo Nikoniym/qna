@@ -52,4 +52,3 @@
 
 $(document).on 'turbolinks:load', ->
   actionCable()
-

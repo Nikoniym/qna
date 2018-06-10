@@ -21,5 +21,3 @@
 
     br
     b.rating-count = @like_count
-
-
