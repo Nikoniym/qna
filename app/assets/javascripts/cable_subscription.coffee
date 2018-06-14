@@ -25,6 +25,8 @@
     received: (data) ->
       if data.answer.user_id != gon.user_id
         console.log 'responce answer'
+        console.log App.cable.subscriptions['subscriptions']
+
         $(".answers-list").append(JST["templates/answer"]
                                       answer: data.answer,
                                       like_count:data.like_count,
@@ -51,4 +53,6 @@
   }
 
 $(document).on 'turbolinks:load', ->
+  App.cable.subscriptions['subscriptions'] = []
   actionCable()
+  console.log App.cable.subscriptions['subscriptions']
