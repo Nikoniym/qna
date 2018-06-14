@@ -5,53 +5,38 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update destroy]
   after_action :publish_question, only: :create
+  before_action :build_answer, only: :show
 
-  def create_comment
-
-  end
+  respond_to :html
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
     @answers = @question.answers.all
-
-    @answer = Answer.new
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      @question.attachments.build
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   def destroy
     if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Your question successfully destroy'
+      respond_with(@question.destroy)
     else
       redirect_to @question, alert: "You can't delete someone else's question"
     end
@@ -69,6 +54,10 @@ class QuestionsController < ApplicationController
             locals: { question: @question }
         )
     )
+  end
+
+  def build_answer
+    @answer = @question.answers.build
   end
 
   def attachment_build

@@ -7,20 +7,19 @@ class AnswersController < ApplicationController
   before_action :find_question, only: :create
   after_action :publish_answer, only: :create
 
+  respond_to :js
+
   def edit
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    flash.now[:notice] = 'Your answer successfully created' if @answer.save
+    respond_with(@answer = @question.answers.create(answer_params))
   end
 
   def update
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
-      flash.now[:notice] = 'Your answer successfully update'
+      respond_with(@answer)
     else
       flash.now[:alert] = "You can't update someone else's answer"
     end
@@ -28,8 +27,7 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.author_of?(@answer)
-      @answer.destroy
-      flash.now[:notice] = 'Your answer successfully destroy'
+      respond_with(@answer.destroy)
     else
       flash.now[:alert] = "You can't delete someone else's answer"
     end
@@ -37,8 +35,7 @@ class AnswersController < ApplicationController
 
   def set_best
     if current_user.author_of?(@answer.question)
-      @answer.set_best!
-      flash.now[:notice] = 'The answer was set best successfully'
+      respond_with(@answer.set_best!)
     else
       flash.now[:alert] = "You can't set the best answer not for your question"
     end
@@ -64,6 +61,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
+    params.require(:answer).permit(:body, attachments_attributes: [:file]).merge(user: current_user)
   end
 end

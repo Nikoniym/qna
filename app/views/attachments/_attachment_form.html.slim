@@ -1,5 +1,5 @@
 p.mt-3 Attachments:
 #tasks
-  = form.fields_for :attachments do |attachment|
+  = form.fields_for :attachments, resource.attachments.build do |attachment|
     = link_to_add_association 'add file', form, :attachments, partial: 'attachments/attachment_fields', locals: {f: attachment}
 

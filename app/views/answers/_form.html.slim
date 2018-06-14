@@ -2,5 +2,5 @@
   .new-answer-errors
   = f.label :body
   = f.text_field :body, class: 'form-control'
-  = render 'attachments/attachment_form', form: f
+  = render 'attachments/attachment_form', form: f, resource: @answer
   = f.submit 'Create', class: 'btn btn-primary mt-3 answer-create'
