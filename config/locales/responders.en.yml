@@ -27,3 +27,6 @@ en:
     comments:
       create:
         notice: 'Your comment successfully created'
+    attachments:
+      destroy:
+        notice: 'Your attachment successfully destroy'
