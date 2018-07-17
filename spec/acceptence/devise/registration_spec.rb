@@ -18,7 +18,10 @@ feature 'User registration', %q{
     fill_in 'Password confirmation', with: '123456'
     click_button 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    open_email('user@email.com')
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_content 'Your email address has been successfully confirmed'
   end
 
   scenario 'Registered user with invalid parameter' do
