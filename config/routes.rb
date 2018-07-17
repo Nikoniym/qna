@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    get 'new_email' => 'omniauth_callbacks#new_email'
+    post 'create_user', to: 'omniauth_callbacks#create_user'
+  end
+
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks', confirmations: 'confirmations' }
 
   root to: 'questions#index'
 
   resources :attachments, only: :destroy
+
+  # get 'new_email', to: 'omniauth_callbacks#new_email'
 
   concern :rating do
     member do

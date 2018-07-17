@@ -46,7 +46,7 @@ gem 'gon'
 gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'koala'
+gem 'omniauth-twitter'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -54,6 +54,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot'
   gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -75,6 +76,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara-webkit'
+  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
