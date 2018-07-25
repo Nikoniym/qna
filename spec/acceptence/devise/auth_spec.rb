@@ -6,7 +6,7 @@ feature 'Authorization via providers', %q{
   I want to use social network services
 } do
 
-  let(:user) { create(:user, email: 'user@temp.email') }
+  let(:user) { create(:user, email: 'test@gmail.com') }
   let(:email) { 'test@gmail.com' }
 
   describe 'facebook' do
@@ -16,15 +16,15 @@ feature 'Authorization via providers', %q{
       click_on 'Sign in with Facebook'
 
       expect(page).to have_content 'Email'
-
-      fill_in 'Email', with: email
+      fill_in 'Email', with: 'test@gmail.com'
       click_on 'send'
 
       open_email(email)
-
       current_email.click_link 'Confirm my account'
 
       expect(page).to have_content('Your email address has been successfully confirmed.')
+      save_and_open_page
+
     end
 
     scenario 'log in user' do
@@ -36,6 +36,8 @@ feature 'Authorization via providers', %q{
       click_on 'Sign in with Facebook'
 
       expect(page).to have_content('Successfully authenticated from Facebook account.')
+
+
     end
   end
 
@@ -44,6 +46,7 @@ feature 'Authorization via providers', %q{
       visit new_user_session_path
 
       click_on 'Sign in with Twitter'
+
       expect(page).to have_content 'Email'
 
       fill_in 'Email', with: email
@@ -53,6 +56,7 @@ feature 'Authorization via providers', %q{
       current_email.click_link 'Confirm my account'
 
       expect(page).to have_content('Your email address has been successfully confirmed.')
+      save_and_open_page
     end
 
     scenario 'log in user' do

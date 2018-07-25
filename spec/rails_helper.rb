@@ -31,7 +31,10 @@ ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.javascript_driver = :webkit
 OmniAuth.config.test_mode = true
-Devise.reconfirmable = true
+OmniAuth.config.add_mock(:twitter, {:uid => '12345'})
+OmniAuth.config.add_mock(:facebook, {:uid => '678900'})
+Devise.reconfirmable = false
+
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
