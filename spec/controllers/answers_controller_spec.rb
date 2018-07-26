@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
-  let(:question) { create(:question,  user: @user) }
+  let(:question) { create(:question, user: @user) }
   let!(:answer) { create(:answer, question: question, user: @user)}
 
   describe 'GET #edit' do
@@ -98,12 +98,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render update template' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-        expect(response).to render_template :update
+        expect(response).to redirect_to root_url
       end
 
       it 'view the flash message' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-        expect(flash[:alert]).to eq "You can't update someone else's answer"
+        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
     end
   end
@@ -134,12 +134,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render destroy template' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to redirect_to root_url
       end
 
       it 'view the flash message' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(flash[:alert]).to eq "You can't delete someone else's answer"
+        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
     end
   end
@@ -169,11 +169,11 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render set_best template' do
-        expect(response).to render_template :set_best
+        expect(response).to redirect_to root_url
       end
 
       it 'view the flash message' do
-        expect(flash[:alert]).to eq "You can't set the best answer not for your question"
+        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
     end
   end

@@ -1,4 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_authorization_check
+
   def facebook
     omniauth_callback('Facebook')
   end
@@ -9,12 +11,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
 
   def omniauth_callback(provider)
-    if request.env['omniauth.auth'].info.email
-      @user = User.find_for_ouath(request.env['omniauth.auth'])
-    else
-      request.env['omniauth.auth'].info.email = session['devise.user_email']
-      @user = User.find_for_ouath(request.env['omniauth.auth'])
-    end
+    request.env['omniauth.auth'].info.email = session['devise.user_email'] unless request.env['omniauth.auth'].info.email
+    @user = User.find_for_ouath(request.env['omniauth.auth'])
 
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication

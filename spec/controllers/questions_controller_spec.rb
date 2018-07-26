@@ -55,6 +55,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
+    let(:question) { create(:question, user: @user) }
+
     before { get :edit, params: { id: question } }
 
     it 'assings the requested question to @question' do
@@ -68,6 +70,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
+    let(:question) { create(:question, user: @user) }
+
     context 'with valid attributes' do
       it 'saves the new question in the database' do
         expect { post :create, params: {question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
@@ -98,6 +102,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+    let(:question) { create(:question, user: @user) }
+
     context 'valid attributes' do
       it 'assings the requested question to @question' do
         patch :update, params: {id: question, question: attributes_for(:question) }
@@ -105,8 +111,9 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'changes question attributes' do
-        patch :update, params: {id: question, question: {title: 'new title', body: 'new body'} }
+        patch :update, params: { id: question, question: {title: 'new title', body: 'new body'} }
         question.reload
+
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
@@ -161,12 +168,12 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirect to index view' do
         delete :destroy, params: { id: question }
-        expect(response).to redirect_to question_path(question)
+        expect(response).to redirect_to root_url
       end
 
       it 'view the flash message' do
         delete :destroy, params: { id: question }
-        expect(flash[:alert]).to eq "You can't delete someone else's question"
+        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
     end
   end

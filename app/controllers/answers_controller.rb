@@ -9,6 +9,8 @@ class AnswersController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def edit
   end
 
@@ -17,28 +19,16 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      respond_with(@answer)
-    else
-      flash.now[:alert] = "You can't update someone else's answer"
-    end
+    @answer.update(answer_params)
+    respond_with(@answer)
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      respond_with(@answer.destroy)
-    else
-      flash.now[:alert] = "You can't delete someone else's answer"
-    end
+    respond_with(@answer.destroy)
   end
 
   def set_best
-    if current_user.author_of?(@answer.question)
-      respond_with(@answer.set_best!)
-    else
-      flash.now[:alert] = "You can't set the best answer not for your question"
-    end
+    respond_with(@answer.set_best!)
   end
 
   private

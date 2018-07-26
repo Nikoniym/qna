@@ -4,7 +4,7 @@
 
     klass = '.' + data.class + '-' + data.id
     message = "<div class='mt-3'><p class='alert alert-success'>" + data.notice + "</p></div>"
-    $(klass + ' .rating-count').text(data.count)
+    $(klass + ' .rating-count').first().text(data.count)
     $('.flash').html(message)
 
   .bind 'ajax:error', (e) ->
@@ -15,7 +15,7 @@
     else
       klass = '.' + data.class + '-' + data.id
       message = "<div class='mt-3'><p class='alert alert-danger'>" + data.alert + "</p></div>"
-      $(klass + ' .rating-count').text(data.count)
+      $(klass + ' .rating-count').first().text(data.count)
       $('.flash').html(message)
 
   $('.add-comment-link').bind 'ajax:error', (e) ->

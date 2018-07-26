@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :answers
   has_many :ratings
   has_many :authorizations, dependent: :destroy
+  has_many :comments
 
   def author_of?(object)
     object.user_id == id

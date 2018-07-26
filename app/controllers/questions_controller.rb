@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
 
   respond_to :html
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -35,18 +37,14 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      respond_with(@question.destroy)
-    else
-      redirect_to @question, alert: "You can't delete someone else's question"
-    end
+    respond_with(@question.destroy)
   end
 
   private
 
   def publish_question
     return if @question.errors.any?
-    # gon_user
+
     ActionCable.server.broadcast(
         'questions',
         ApplicationController.render(

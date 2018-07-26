@@ -23,8 +23,6 @@ feature 'Authorization via providers', %q{
       current_email.click_link 'Confirm my account'
 
       expect(page).to have_content('Your email address has been successfully confirmed.')
-      save_and_open_page
-
     end
 
     scenario 'log in user' do
@@ -36,8 +34,6 @@ feature 'Authorization via providers', %q{
       click_on 'Sign in with Facebook'
 
       expect(page).to have_content('Successfully authenticated from Facebook account.')
-
-
     end
   end
 
@@ -56,7 +52,6 @@ feature 'Authorization via providers', %q{
       current_email.click_link 'Confirm my account'
 
       expect(page).to have_content('Your email address has been successfully confirmed.')
-      save_and_open_page
     end
 
     scenario 'log in user' do

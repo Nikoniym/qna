@@ -2,7 +2,7 @@
   h1 = @question.title
   p = @question.body
   = render 'attachments/attachment_list', resource: @question
-  - if current_user&.author_of?(@question)
+  - if can?(:changes, @question)
     = link_to 'edit', edit_question_path(@question)
     '  |
     = link_to 'destroy', question_path(@question), method: :delete,  data: { confirm: 'Are you sure?' }

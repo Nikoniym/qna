@@ -34,12 +34,12 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'render destroy template' do
         delete :destroy, params: { id: attachment }, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to redirect_to root_url
       end
 
       it 'view the flash message' do
         delete :destroy, params: { id: attachment }, format: :js
-        expect(flash[:alert]).to eq "You can't delete someone else's attachment"
+        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
     end
   end
