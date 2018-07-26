@@ -1,5 +1,3 @@
-<% if	current_user.author_of?(@answer.question)  %>
-  $(".answer-<%=@answer.id %>").remove();
-  $('.answers-list').prepend('<%= j render @answer %>');
-<% end %>
+$(".answer-<%=@answer.id %>").remove();
+$('.answers-list').prepend('<%= j render @answer %>');
 $('.flash').html('<%= j render 'shared/flash' %>');
