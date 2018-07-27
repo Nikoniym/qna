@@ -30,5 +30,11 @@
     message = "<div class='mt-3'><p class='alert alert-danger'>" + data + "</p></div>"
     $('.flash').html(message)
 
+  $('a').bind 'ajax:error', (e) ->
+    [data, status, xhr] = e.detail
+    if $.parseJSON(xhr.status) == 403
+      message = "<div class='mt-3'><p class='alert alert-danger'>You are not authorized to access this page.</p></div>"
+      $('.flash').html(message)
+
 $(document).on 'turbolinks:load', ->
   ajaxRequest()
