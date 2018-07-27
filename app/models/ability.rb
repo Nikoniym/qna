@@ -27,7 +27,7 @@ class Ability
     can :create, [Question, Answer, Comment]
 
     alias_action :update, :destroy, to: :changes
-    can :changes, [Question, Answer], { user: user }
+    can :changes, [Question, Answer], { user_id: user.id }
 
     can :destroy, Attachment do |attachment|
       user.author_of?(attachment.attachable)
@@ -37,11 +37,21 @@ class Ability
       user.author_of?(answer.question) && !answer.best
     end
 
-    can :new_comment, [Question, Answer]
+    can :new_comment, Commentable
 
-    alias_action :like, :dislike, :cancel_vote, to: :vote
-    can :vote, [Question, Answer] do |resource|
-      !user.author_of?(resource)
+    # alias_action :like, :dislike, :cancel_vote, to: :vote
+    # can :vote, Valuable
+
+    can :like, Valuable do |resource|
+      !user.author_of?(resource) && !resource.set_like?(user)
+    end
+
+    can :dislike, Valuable do |resource|
+      !user.author_of?(resource) && !resource.set_dislike?(user)
+    end
+
+    can :cancel_vote, Valuable do |resource|
+      !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
     end
   end
 end

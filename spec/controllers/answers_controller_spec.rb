@@ -98,12 +98,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render update template' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-        expect(response).to redirect_to root_url
-      end
-
-      it 'view the flash message' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+        expect(response.status).to eq 403
       end
     end
   end
@@ -134,12 +129,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render destroy template' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response).to redirect_to root_url
-      end
-
-      it 'view the flash message' do
-        delete :destroy, params: { id: answer }, format: :js
-        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+        expect(response.status).to eq 403
       end
     end
   end
@@ -169,11 +159,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render set_best template' do
-        expect(response).to redirect_to root_url
-      end
-
-      it 'view the flash message' do
-        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+        expect(response.status).to eq 403
       end
     end
   end

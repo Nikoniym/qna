@@ -48,10 +48,31 @@ describe Ability do
     it { should be_able_to :new_comment, Question }
     it { should be_able_to :new_comment, Answer }
 
-    it { should be_able_to :vote, question_not_author }
-    it { should be_able_to :vote, create(:answer, question: question, user: other_user) }
 
-    it { should_not be_able_to :vote, question }
-    it { should_not be_able_to :vote, create(:answer, question: question, user: user) }
+    it { should be_able_to :like, question_not_author }
+    it { should be_able_to :like, create(:answer, question: question, user: other_user) }
+
+    it { should_not be_able_to :like, question }
+    it { should_not be_able_to :like, create(:answer, question: question, user: user) }
+
+    it { should be_able_to :dislike, question_not_author }
+    it { should be_able_to :dislike, create(:answer, question: question, user: other_user) }
+
+    it { should_not be_able_to :dislike, question }
+    it { should_not be_able_to :dislike, create(:answer, question: question, user: user) }
+
+    it 'cancel vote after like' do
+      question_not_author.set_like!(user)
+      should be_able_to :cancel_vote, question_not_author
+    end
+
+    it 'cancel vote after dislike' do
+      question_not_author.set_dislike!(user)
+      should be_able_to :cancel_vote, question_not_author
+    end
+
+    it { should_not be_able_to :cancel_vote, question_not_author }
+
+    it { should_not be_able_to :cancel_vote, question }
   end
 end

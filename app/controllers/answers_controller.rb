@@ -7,9 +7,9 @@ class AnswersController < ApplicationController
   before_action :find_question, only: :create
   after_action :publish_answer, only: :create
 
-  respond_to :js
-
   authorize_resource
+
+  respond_to :js
 
   def edit
   end
