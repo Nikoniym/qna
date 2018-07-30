@@ -39,15 +39,15 @@ module Valuable
   end
 
   def can_like?(user)
-    !user.author_of?(self) && !set_like?(user)
+    !set_like?(user)
   end
 
   def can_dislike?(user)
-    !user.author_of?(self) && !set_dislike?(user)
+    !set_dislike?(user)
   end
 
   def can_cancel_vote?(user)
-    !user.author_of?(self) && (set_dislike?(user) || set_like?(user))
+    set_dislike?(user) || set_like?(user)
   end
 
   private

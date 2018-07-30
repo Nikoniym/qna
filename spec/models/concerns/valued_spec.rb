@@ -78,9 +78,6 @@ shared_examples_for 'valued' do
     it 'return false when not yet voted like' do
       expect(resource.can_like?(else_user)).to eq true
     end
-    it 'return false when you are the author of the object' do
-      expect(resource.can_like?(user)).to eq false
-    end
   end
 
   describe '#can_dislike?' do
@@ -92,10 +89,6 @@ shared_examples_for 'valued' do
     it 'return false when already voted like' do
       expect(resource.can_dislike?(else_user)).to eq true
     end
-
-    it 'return false when you are the author of the object' do
-      expect(resource.can_dislike?(user)).to eq false
-    end
   end
 
   describe '#can_cancel_vote?' do
@@ -106,11 +99,6 @@ shared_examples_for 'valued' do
     it 'return true when voted' do
       resource.set_dislike!(else_user)
       expect(resource.can_cancel_vote?(else_user)).to eq true
-    end
-
-    it 'return false when when you are the author of the object' do
-      resource.set_dislike!(user)
-      expect(resource.can_cancel_vote?(user)).to eq false
     end
   end
 end

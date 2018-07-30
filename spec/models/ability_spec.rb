@@ -61,18 +61,10 @@ describe Ability do
     it { should_not be_able_to :dislike, question }
     it { should_not be_able_to :dislike, create(:answer, question: question, user: user) }
 
-    it 'cancel vote after like' do
-      question_not_author.set_like!(user)
-      should be_able_to :cancel_vote, question_not_author
-    end
-
-    it 'cancel vote after dislike' do
-      question_not_author.set_dislike!(user)
-      should be_able_to :cancel_vote, question_not_author
-    end
-
-    it { should_not be_able_to :cancel_vote, question_not_author }
+    it { should be_able_to :cancel_vote, question_not_author }
+    it { should be_able_to :cancel_vote, create(:answer, question: question, user: other_user) }
 
     it { should_not be_able_to :cancel_vote, question }
+    it { should be_able_to :cancel_vote, create(:answer, question: question, user: other_user) }
   end
 end

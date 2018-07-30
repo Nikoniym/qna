@@ -37,21 +37,24 @@ class Ability
       user.author_of?(answer.question) && !answer.best
     end
 
-    can :new_comment, Commentable
+    can :new_comment, [Answer, Question]
 
-    # alias_action :like, :dislike, :cancel_vote, to: :vote
-    # can :vote, Valuable
+    alias_action :like, :dislike, :cancel_vote, to: :vote
 
-    can :like, Valuable do |resource|
-      !user.author_of?(resource) && !resource.set_like?(user)
+    can :vote, [Answer, Question] do |resource|
+      !user.author_of?(resource)
     end
 
-    can :dislike, Valuable do |resource|
-      !user.author_of?(resource) && !resource.set_dislike?(user)
-    end
-
-    can :cancel_vote, Valuable do |resource|
-      !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
-    end
+    # can :like, [Answer, Question] do |resource|
+    #   !user.author_of?(resource) && !resource.set_like?(user)
+    # end
+    #
+    # can :dislike, [Answer, Question] do |resource|
+    #   !user.author_of?(resource) && !resource.set_dislike?(user)
+    # end
+    #
+    # can :cancel_vote, [Answer, Question] do |resource|
+    #   !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
+    # end
   end
 end

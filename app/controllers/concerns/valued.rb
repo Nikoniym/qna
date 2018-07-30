@@ -6,6 +6,7 @@ module Valued
   end
 
   def like
+    authorize! :like, @resource
     if @resource.can_like?(current_user)
       @resource.set_like!(current_user)
       respond_to do |format|
@@ -19,6 +20,7 @@ module Valued
   end
 
   def dislike
+    authorize! :dislike, @resource
     if @resource.can_dislike?(current_user)
       @resource.set_dislike!(current_user)
       respond_to do |format|
@@ -32,6 +34,7 @@ module Valued
   end
 
   def cancel_vote
+    authorize! :cancel_vote, @resource
     if @resource.can_cancel_vote?(current_user)
       @resource.delete_vote!(current_user)
       respond_to do |format|
