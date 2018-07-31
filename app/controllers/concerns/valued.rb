@@ -35,15 +35,10 @@ module Valued
 
   def cancel_vote
     authorize! :cancel_vote, @resource
-    if @resource.can_cancel_vote?(current_user)
-      @resource.delete_vote!(current_user)
-      respond_to do |format|
-        format.json { render json: responce(:notice, "Voting for the #{resource_name} is canceled successfully") }
-      end
-    else
-      respond_to do |format|
-        format.json { render json: responce(:alert, "Voting for a #{resource_name} cannot be cancelled"), status: :unprocessable_entity }
-      end
+
+    @resource.delete_vote!(current_user)
+    respond_to do |format|
+      format.json { render json: responce(:notice, "Voting for the #{resource_name} is canceled successfully") }
     end
   end
 

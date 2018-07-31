@@ -40,7 +40,7 @@ shared_examples_for "valuable" do
     end
 
     it 'nothing to cancel' do
-      expect(put :cancel_vote, params: { id: else_resource }, format: :json).to have_http_status(:unprocessable_entity)
+      expect(put :cancel_vote, params: { id: else_resource }, format: :json).to have_http_status(:forbidden)
     end
   end
 

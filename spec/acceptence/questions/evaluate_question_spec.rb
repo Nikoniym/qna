@@ -80,14 +80,14 @@ feature 'To evaluate the question', %q{
       expect(page).to have_content 'Voting for the question is canceled successfully'
     end
 
-    scenario 'when there is nothing to cancel', js: true do
+    scenario 'when there is nothing to cancel', json: true do
       visit question_path(question_2)
 
       within ".question-#{question_2.id}" do
         click_link 'cancel vote'
         expect(page).to have_content '0'
       end
-      expect(page).to have_content 'Voting for a question cannot be cancelled'
+      expect(page).to have_content 'You are not authorized to access this page.'
     end
   end
 

@@ -90,15 +90,4 @@ shared_examples_for 'valued' do
       expect(resource.can_dislike?(else_user)).to eq true
     end
   end
-
-  describe '#can_cancel_vote?' do
-    it 'return false when not voted' do
-      expect(resource.can_cancel_vote?(else_user)).to eq false
-    end
-
-    it 'return true when voted' do
-      resource.set_dislike!(else_user)
-      expect(resource.can_cancel_vote?(else_user)).to eq true
-    end
-  end
 end

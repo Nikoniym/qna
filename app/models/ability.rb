@@ -39,10 +39,14 @@ class Ability
 
     can :new_comment, [Answer, Question]
 
-    alias_action :like, :dislike, :cancel_vote, to: :vote
+    alias_action :like, :dislike, to: :vote
 
     can :vote, [Answer, Question] do |resource|
       !user.author_of?(resource)
+    end
+
+    can :cancel_vote, [Answer, Question] do |resource|
+      !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
     end
 
     # can :like, [Answer, Question] do |resource|

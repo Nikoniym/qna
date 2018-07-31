@@ -46,10 +46,6 @@ module Valuable
     !set_dislike?(user)
   end
 
-  def can_cancel_vote?(user)
-    set_dislike?(user) || set_like?(user)
-  end
-
   private
 
   def destroy_dislike(user)
