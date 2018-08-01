@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_scope :user do
     get 'new_email' => 'omniauth_callbacks#new_email'
     post 'create_user', to: 'omniauth_callbacks#create_user'
@@ -10,7 +11,14 @@ Rails.application.routes.draw do
 
   resources :attachments, only: :destroy
 
-  # get 'new_email', to: 'omniauth_callbacks#new_email'
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+        get :users_list, on: :collection
+      end
+    end
+  end
 
   concern :rating do
     member do
