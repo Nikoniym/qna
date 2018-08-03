@@ -50,6 +50,8 @@ gem 'omniauth-twitter'
 gem 'cancancan'
 gem 'doorkeeper', '4.2.6'
 gem 'active_model_serializers'
+
+#change to_json
 gem 'oj'
 gem 'oj_mimic_json'
 

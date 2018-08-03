@@ -3,6 +3,8 @@ class Api::V1::BaseController < ApplicationController
 
   skip_authorization_check
 
+  # authorize_resource
+
   respond_to :json
 
   protected
