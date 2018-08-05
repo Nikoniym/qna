@@ -1,6 +1,8 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
   before_action :find_question, only: :show
 
+  authorize_resource
+
   def index
     @questions = Question.all
     respond_with @questions
@@ -21,6 +23,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
   
   def question_params
-    params.require(:question).permit(:title, :body).merge(user: current_resource_owner)
+    params.require(:question).permit(:title, :body).merge(user: current_user)
   end
 end

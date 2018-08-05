@@ -2,6 +2,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :find_question, only: [:index, :create]
   before_action :find_answer, only: :show
 
+  authorize_resource
+
   def index
     respond_with(@question.answers)
   end
@@ -25,6 +27,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def answer_params
-    params.require(:answer).permit(:body).merge(user: current_resource_owner)
+    params.require(:answer).permit(:body).merge(user: current_user)
   end
 end

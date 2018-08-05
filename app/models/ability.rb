@@ -24,6 +24,8 @@ class Ability
   def user_abilities
     guest_abilities
 
+    can :me, User
+
     can :create, [Question, Answer, Comment]
 
     alias_action :update, :destroy, to: :changes
@@ -48,17 +50,5 @@ class Ability
     can :cancel_vote, [Answer, Question] do |resource|
       !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
     end
-
-    # can :like, [Answer, Question] do |resource|
-    #   !user.author_of?(resource) && !resource.set_like?(user)
-    # end
-    #
-    # can :dislike, [Answer, Question] do |resource|
-    #   !user.author_of?(resource) && !resource.set_dislike?(user)
-    # end
-    #
-    # can :cancel_vote, [Answer, Question] do |resource|
-    #   !user.author_of?(resource) && (resource.set_dislike?(user) || resource.set_like?(user))
-    # end
   end
 end
