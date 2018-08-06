@@ -121,8 +121,6 @@ describe 'Questions API' do
     context 'authorized' do
       it 'returns 200 status code' do
         post_create_question(:question)
-        p '###########'
-        p response.body
         expect(response).to be_success
       end
 
