@@ -12,86 +12,55 @@ describe 'Questions API' do
   let!(:attachment) { attachments.last }
 
   describe 'GET /index' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/questions', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/questions', params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'Api Authenticable' do
+      let(:api_path) { '/api/v1/questions' }
     end
 
     context 'authorized' do
       before { get '/api/v1/questions', params: { format: :json, access_token: access_token.token } }
 
-      it 'returns 200 status code' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'Response success'
 
-      it 'returns list of questions' do
-        expect(response.body).to have_json_size(2)
-      end
+      it_behaves_like 'Number of objects', 'questions', 2
 
-      %w(id title body user_id created_at updated_at).each do |attr|
-        it "question object contains #{attr}" do
-          expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("0/#{attr}")
-        end
-      end
+      it_behaves_like 'Check the arguments object',
+                      'question',
+                      %w(id title body user_id created_at updated_at),
+                      '0/'
+
 
       it 'question object contains short_title' do
         expect(response.body).to be_json_eql(question.title.truncate(10).to_json).at_path("0/short_title")
       end
 
       context 'answers' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("0/answers")
-        end
+        it_behaves_like 'Number of objects', 'answers', 1, '0/answers'
 
-        %w(id body user_id question_id created_at updated_at).each do |attr|
-          it "contains #{attr}" do
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/answers/0/#{attr}")
-          end
-        end
+        it_behaves_like 'Check the arguments object',
+                        'answer',
+                        %w(id body user_id question_id created_at updated_at),
+                        '0/answers/0/'
       end
     end
   end
 
   describe 'GET /show' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'Api Authenticable' do
+      let(:api_path) { "/api/v1/questions/#{question.id}" }
     end
 
     context 'authorized' do
       before { get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: access_token.token } }
 
-      it 'returns 200 status code' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'Response success'
 
-      it 'return comments' do
-        expect(response.body).to have_json_size(2).at_path("comments")
-      end
+      it_behaves_like 'Number of objects', 'comments', 2, 'comments'
+      it_behaves_like 'Number of objects', 'attachments', 2, 'attachments'
 
-      it 'return attachments' do
-        expect(response.body).to have_json_size(2).at_path("attachments")
-      end
-
-      %w(id body commentable_id commentable_type created_at updated_at).each do |attr|
-        it "comments object contains #{attr}" do
-          expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
-        end
-      end
+      it_behaves_like 'Check the arguments object',
+                      'comment',
+                      %w(id body commentable_id commentable_type created_at updated_at),
+                      'comments/0/'
 
       %w(id url attachable_id attachable_type created_at updated_at).each do |attr|
         it "attachment object contains #{attr}" do
@@ -106,23 +75,13 @@ describe 'Questions API' do
   end
 
   describe 'POST /create' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        post '/api/v1/questions', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/questions', params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'Api Authenticable' do
+      let(:api_path) { '/api/v1/questions' }
     end
 
     context 'authorized' do
       it 'returns 200 status code' do
         post_create_question(:question)
-        p '###########'
-        p response.body
         expect(response).to be_success
       end
 
