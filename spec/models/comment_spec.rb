@@ -12,7 +12,7 @@ RSpec.describe Comment, type: :model do
     let(:comment_2) { create(:comment, commentable: create(:question, user: user), user: user) }
 
     it 'orders by ascending created_at' do
-      Comment.all.should eq [comment_1, comment_2]
+      expect(Comment.all).to eq [comment_1, comment_2]
     end
   end
 end
