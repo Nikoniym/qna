@@ -1,4 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   devise_scope :user do
     get 'new_email' => 'omniauth_callbacks#new_email'
@@ -37,6 +43,7 @@ Rails.application.routes.draw do
   resources :comments, only: :create
 
   resources :questions, concerns: [:rating, :comment] do
+    resources :subscriptions, only: [:create, :destroy], shallow: true
     resources :answers, except: %i[index new show], concerns: [:rating, :comment], shallow: true do
       put :set_best, on: :member
     end

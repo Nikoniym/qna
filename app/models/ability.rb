@@ -24,6 +24,8 @@ class Ability
   def user_abilities
     guest_abilities
 
+    can :manage, Subscription
+
     can :me, User
 
     can :create, [Question, Answer, Comment]

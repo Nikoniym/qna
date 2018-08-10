@@ -11,10 +11,18 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :job_sending_messages
+
   def set_best!
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
     end
+  end
+
+  private
+
+  def job_sending_messages
+    SendNewAnswerJob.perform_later(self)
   end
 end
