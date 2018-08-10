@@ -15,6 +15,9 @@
     ul
       = render @question.comments
     = link_to 'add comment', question_new_comment_path(@question), class: 'add-comment-link', remote: true
+  - if can?(:manage, Subscription)
+    .subscription
+      = render 'subscription'
   hr
   .answers-list
     = render @answers

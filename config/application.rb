@@ -15,8 +15,12 @@ module Qna
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
+    config.time_zone = 'Moscow'
+    config.active_record.default_timezone = :local
 
     config.action_cable.disable_request_forgery_protection = false
+
+    config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
       g.test_framework :rspec,

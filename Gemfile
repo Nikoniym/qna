@@ -50,6 +50,11 @@ gem 'omniauth-twitter'
 gem 'cancancan'
 gem 'doorkeeper', '4.2.6'
 gem 'active_model_serializers'
+# gem 'delayed_job_active_record'
+gem 'whenever'
+gem 'sidekiq', '< 5'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidetiq'
 
 #change to_json
 gem 'oj'

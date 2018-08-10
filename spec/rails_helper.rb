@@ -1,6 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'cancan/matchers'
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
+
 # require 'capybara/email/rspec'
 
 ENV['RAILS_ENV'] ||= 'test'

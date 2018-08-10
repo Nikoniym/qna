@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :ratings
   has_many :authorizations, dependent: :destroy
   has_many :comments
+  has_many :subscriptions, dependent: :destroy
 
   def author_of?(object)
     object.user_id == id
@@ -32,5 +33,15 @@ class User < ApplicationRecord
 
     user.authorizations.create(provider:auth['provider'], uid: auth['uid'].to_s) if user.persisted?
     user
+  end
+
+  def self.send_daily_digest
+    questions = Question.where('created_at >= ?', Time.zone.now.beginning_of_day)
+
+    if questions.present?
+      find_each do |user|
+        DailyMailer.digest(user, questions).deliver_later
+      end
+    end
   end
 end
