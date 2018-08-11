@@ -13,22 +13,12 @@ class Question < ApplicationRecord
   after_create :create_subscription
 
   def subscribe?(user)
-    Subscription.find_by(user: user, question: self)
+    subscriptions.find_by(user: user)
   end
 
   private
 
-  def self.send_daily_digest
-    @questions = Question.where('created_at >= ?', Time.zone.now.beginning_of_day)
-
-    if @questions
-      User.find_each do |user|
-        DailyMailer.digest(user, @questions).deliver_now
-      end
-    end
-  end
-
   def create_subscription
-    Subscription.create(user_id: user_id, question: self)
+    subscriptions.create(user_id: user_id)
   end
 end
