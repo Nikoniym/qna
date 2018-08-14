@@ -1,0 +1,20 @@
+- if @objects.present?
+  - @objects.each do |object|
+    - case object.class.name
+    - when 'Question'
+      = link_to object.title, object
+      hr
+    - when 'Answer'
+      = link_to object.body, question_path(object.question_id)
+      hr
+    - when 'Comment'
+      - if object.commentable_type == 'Question'
+        = link_to object.body, question_path(object.commentable_id)
+      - else
+        = link_to object.body, question_path(object.commentable.question_id)
+      hr
+    - when 'User'
+      p = object.email
+      hr
+- else
+    p At your request, nothing found

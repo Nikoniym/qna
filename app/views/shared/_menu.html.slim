@@ -1,6 +1,7 @@
 nav.navbar.navbar-light.bg-light
 
   = link_to 'Questions & Answers', root_path, class: 'navbar-brand'
+  = render 'search/form'
 
   span.navbar-test
     - if user_signed_in?
