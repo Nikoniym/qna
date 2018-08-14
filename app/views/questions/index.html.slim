@@ -1,7 +1,6 @@
 - if can?(:create, Question)
   .text-center
     = link_to 'Ask question', new_question_path
-= link_to 'qwestionm', Answer.first
 .row.mt-3.justify-content-center
   .questions-list.collection.col-10
     = render @questions
