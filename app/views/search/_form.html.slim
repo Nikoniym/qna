@@ -1,0 +1,5 @@
+= form_tag :search_index, method: :get do
+  = label_tag(:text, 'Search for:')
+  = text_field_tag(:text)
+  = select_tag :model, options_for_select(%w(all user question answer comment))
+  = submit_tag('Search')

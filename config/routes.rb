@@ -48,4 +48,6 @@ Rails.application.routes.draw do
       put :set_best, on: :member
     end
   end
+
+  resources :search, only: :index
 end
