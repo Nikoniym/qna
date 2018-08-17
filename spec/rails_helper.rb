@@ -39,6 +39,12 @@ OmniAuth.config.add_mock(:twitter, {:uid => '12345'})
 OmniAuth.config.add_mock(:facebook, {:uid => '678900'})
 Devise.reconfirmable = false
 
+Capybara.default_max_wait_time = 5
+Capybara.server = :puma
+ActionDispatch::IntegrationTest
+Capybara.server_port = 3001
+Capybara.app_host = 'http://localhost:3001'
+
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
@@ -55,8 +61,14 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
 
+  config.use_transactional_fixtures = false
+  #
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -76,9 +88,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  ActionDispatch::IntegrationTest
-  Capybara.server_port = 3001
-  Capybara.app_host = 'http://localhost:3001'
 end
 
 Shoulda::Matchers.configure do |config|
