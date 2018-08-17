@@ -18,8 +18,10 @@ RSpec.describe SearchController, type: :controller do
     end
 
     it 'with invalid model' do
-      get :index, params: { text: '', model: 'invalid' }
-      expect(response).to render_template :index
+      ThinkingSphinx::Test.run do
+        get :index, params: { text: 'text text text', model: 'invalid' }
+        expect(response).to render_template :index
+      end
     end
   end
 end
