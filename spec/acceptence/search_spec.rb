@@ -57,4 +57,12 @@ feature 'Searching','
       expect(page).to have_content(user.email)
     end
   end
+
+  scenario 'blank search', :js do
+    visit root_path
+
+    click_on 'Search'
+
+    expect(page).to have_content('At your request, nothing found')
+  end
 end
