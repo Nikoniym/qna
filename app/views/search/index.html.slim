@@ -1,13 +1,7 @@
 - if @objects.present?
   - @objects.each do |object|
-    - if object.name == :email
-      span
-        ' #{object.model}
-      = mail_to object.url
-    - else
-      span
-        ' #{object.model}
-      = link_to object.name, object.url
+    = object.decorate.model
+    = object.decorate.completion_link
     hr
 - else
     p At your request, nothing found

@@ -1,23 +1,15 @@
-require_relative 'response'
-
 class Search
-  attr_reader :objects
   ATTR = %w(all user question answer comment)
 
   def initialize(text, model)
     @objects = {}
-
-    check_model(model)
-
-    text.present? ? @objects = @model.search(Riddle.escape(text), page: 1, per_page: 50) :  @objects = {}
+    @text = text
+    @model = model
   end
 
-  def response
-    @response = []
-    @objects.each do |object|
-      @response << Response.new(object)
-    end
-    @response
+  def call
+    check_model(@model)
+    @text.present? ? @objects = @model.search(Riddle.escape(@text), page: 1, per_page: 50) :  @objects = {}
   end
 
   private

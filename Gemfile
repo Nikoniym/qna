@@ -59,6 +59,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'database_cleaner'
 gem 'selenium-webdriver'
+gem 'draper'
 
 
 #change to_json
