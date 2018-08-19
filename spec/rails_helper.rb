@@ -2,6 +2,8 @@
 require 'spec_helper'
 require 'cancan/matchers'
 require 'sidekiq/testing'
+require 'capybara/rspec/matchers'
+
 Sidekiq::Testing.fake!
 
 # require 'capybara/email/rspec'
@@ -52,6 +54,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.include AcceptenceHelpers, type: :feature
   config.include OmniauthMacros
+  config.include Capybara::RSpecMatchers, :type => :decorator
 
   config.raise_errors_for_deprecations!
 
@@ -69,6 +72,10 @@ RSpec.configure do |config|
   config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
   config.before(:each) { DatabaseCleaner.start }
   config.after(:each) { DatabaseCleaner.clean }
+
+  # config.before(:each, type: :decorator) do |example|
+  #   Draper::ViewContext.controller = ExampleEngine::CustomRootController.new
+  # end
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
