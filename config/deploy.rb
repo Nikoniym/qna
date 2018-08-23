@@ -52,4 +52,4 @@ namespace :git do
   end
 end
 
-before :deploy, 'git:deploy'
+# before :deploy, 'git:deploy'
