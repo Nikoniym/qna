@@ -32,7 +32,7 @@ namespace :sphinx do
     on roles(:app) do
       within current_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, "rails ts:index"
+          execute :bundle, :exec, "rake ts:index"
           # execute :bundle, :exec, "rails ts:start"
         end
       end
