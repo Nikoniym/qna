@@ -39,28 +39,17 @@ namespace :sphinx do
     end
   end
 end
-#
-#   desc 'Stop private_pub server'
-#   task :stop do
-#     on roles(:app) do
-#       within current_path do
-#         with rails_env: fetch(:rails_env) do
-#           execute :bundle, "exec thin -C config/private_pub_thin.yml stop"
-#         end
-#       end
-#     end
-#   end
-#
-#   desc 'Restart private_pub server'
-#   task :restart do
-#     on roles(:app) do
-#       within current_path do
-#         with rails_env: fetch(:rails_env) do
-#           execute :bundle, "exec thin -C config/private_pub_thin.yml restart"
-#         end
-#       end
-#     end
-#   end
-# end
-#
-# after 'deploy:restart', 'private_pub:restart'
+
+namespace :git do
+  desc 'Deploy'
+  task :deploy do
+    ask(:message, "Commit message?")
+    run_locally do
+      execute "git add -A"
+      execute "git commit -m '#{fetch(:message)}'"
+      execute "git push"
+    end
+  end
+end
+
+before :deploy, 'git:deploy'
