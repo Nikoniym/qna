@@ -1,8 +1,8 @@
 production:
-  pid_file:  /home/deployer/qna/share/log/production.sphinx.pid
-  indices_location: /home/deployer/qna/current/db/sphinx
-  configuration_file: /home/deployer/qna/current/config/production.sphinx.conf
-  binlog_path: /home/deployer/qna/releases/20180823130500/tmp/binlog/production
+#  pid_file:  /home/deployer/qna/share/log/production.sphinx.pid
+#  indices_location: /home/deployer/qna/current/db/sphinx
+#  configuration_file: /home/deployer/qna/current/config/production.sphinx.conf
+#  binlog_path: /home/deployer/qna/releases/20180823130500/tmp/binlog/production
   mysql41: 9307
 
 
