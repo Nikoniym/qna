@@ -32,7 +32,5 @@ module Qna
                        controller_spec: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
-
-    config.autoload_paths += Dir[Rails.root.join("app", "models", "search")]
   end
 end
