@@ -1,0 +1,7 @@
+production:
+  pid_file:  /home/deployer/qna/shared/log/production.sphinx.pid
+  indices_location: /home/deployer/qna/db/sphinx/production/
+  configuration_file: /home/deployer/qna/config/production.sphinx.conf
+  binlog_path: /home/deployer/qna/releases/20180823130500/tmp/binlog/production
+
+

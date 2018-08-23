@@ -26,17 +26,19 @@ namespace :deploy do
 end
 
 
-# namespace :private_pub do
-#   desc 'Start private_pub server'
-#   task :start do
-#     on roles(:app) do
-#       within current_path do
-#         with rails_env: fetch(:rails_env) do
-#           execute :bundle, "exec thin -C config/private_pub_thin.yml start"
-#         end
-#       end
-#     end
-#   end
+namespace :sphinx do
+  desc 'Start sphinx server'
+  task :start do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, :exec, "rails ts:index"
+          # execute :bundle, :exec, "rails ts:start"
+        end
+      end
+    end
+  end
+end
 #
 #   desc 'Stop private_pub server'
 #   task :stop do
