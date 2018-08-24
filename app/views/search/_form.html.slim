@@ -1,5 +1,5 @@
-= form_tag :search_index, method: :get do
-  = label_tag(:text, 'Search for:')
-  = text_field_tag(:text)
-  = select_tag :model, options_for_select(Search::ATTR)
-  = submit_tag('Search')
+= form_tag :search_index, method: :get, class: 'form-inline' do
+  = label_tag 'Search for:', nil, class: 'mb-2 mr-sm-2 mb-sm-0'
+  = text_field_tag 'text', nil, class: 'form-control mb-2 mr-sm-2 mb-sm-0'
+  = select_tag :model, options_for_select(Search::ATTR), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
+  = submit_tag 'Search', class: 'btn btn-info'

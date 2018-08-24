@@ -55,4 +55,6 @@
 $(document).on 'turbolinks:load', ->
   App.cable.subscriptions['subscriptions'] = []
   actionCable()
-  console.log App.cable.subscriptions['subscriptions']
+
+
+

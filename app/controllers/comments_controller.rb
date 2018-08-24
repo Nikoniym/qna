@@ -1,15 +1,25 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  after_action :find_current_question
-  after_action :set_element
   after_action :publish_comment, only: :create
-
-  respond_to :js
 
   authorize_resource
 
   def create
-    respond_with(@comment = Comment.create(comment_params))
+    @comment = Comment.new(comment_params)
+    @comment.user = current_user
+
+    if @comment.commentable_type && @comment.commentable_id
+      type = @comment.commentable_type.downcase
+      @element = ".#{type}-#{@comment.commentable_id} .#{type}-comments-list"
+    end
+
+    if @comment.commentable_type == 'Answer'
+      @question_id = @comment.commentable.question_id
+    else
+      @question_id = @comment.commentable_id
+    end
+
+    flash.now[:notice] = 'Your comment successfully created' if @comment.save
   end
 
   private
@@ -23,22 +33,8 @@ class CommentsController < ApplicationController
     )
   end
 
-  def set_element
-    if @comment.commentable_type && @comment.commentable_id
-      type = @comment.commentable_type.downcase
-      @element = ".#{type}-#{@comment.commentable_id} .#{type}-comments-list"
-    end
-  end
-
-  def find_current_question
-    if @comment.commentable_type == 'Answer'
-      @question_id = @comment.commentable.question_id
-    else
-      @question_id = @comment.commentable_id
-    end
-  end
-
   def comment_params
-    params.require(:comment).permit(:body, :commentable_id, :commentable_type).merge(user: current_user)
+    params.require(:comment).permit(:body, :commentable_id, :commentable_type)
   end
 end
+
