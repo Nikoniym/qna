@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  after_create :job_sending_messages
+  after_commit :job_sending_messages, on: :create
 
   def set_best!
     transaction do

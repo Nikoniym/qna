@@ -39,8 +39,11 @@ class User < ApplicationRecord
     questions = Question.where('created_at >= ?', Time.zone.now.beginning_of_day)
 
     if questions.present?
+      hash_question = []
+      questions.each { |q| hash_question << q }
+
       find_each do |user|
-        DailyMailer.digest(user, questions).deliver_later
+        DailyMailer.digest(user, hash_question).deliver_later
       end
     end
   end
