@@ -60,6 +60,7 @@ gem 'thinking-sphinx'
 gem 'database_cleaner'
 gem 'selenium-webdriver'
 gem 'draper'
+gem 'unicorn'
 
 
 #change to_json
@@ -90,6 +91,7 @@ group :development do
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-rails-console', require: false
   gem 'capistrano-logtail', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do

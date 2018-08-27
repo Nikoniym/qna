@@ -13,12 +13,12 @@ append :linked_files, 'config/database.yml', 'config/master.key'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/uploads'
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      execute :touch, release_path.join('tmp/restart.txt')
+      # execute :touch, release_path.join('tmp/restart.txt')
+      invoke 'unicorn:restart'
     end
   end
 
@@ -26,13 +26,13 @@ namespace :deploy do
 end
 
 
-namespace :sphinx do
-  desc 'Start sphinx server'
+namespace :active_job do
+  desc 'Start sidekiq and ActiveJob'
   task :start do
     on roles(:app) do
       within current_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, "rails ts:configure ts:index ts:restart"
+          execute :bundle, :exec, "sidekiq -q default -q mailers --pidfile /home/deployer/qna/shared/tmp/pids/sidekiq-0.pid --logfile /home/deployer/qna/shared/log/sidekiq.log --daemon"
         end
       end
     end
