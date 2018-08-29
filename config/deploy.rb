@@ -32,7 +32,7 @@ namespace :active_job do
     on roles(:app) do
       within current_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, "sidekiq -q default -q mailers --pidfile /home/deployer/qna/shared/tmp/pids/sidekiq-0.pid --logfile /home/deployer/qna/shared/log/sidekiq.log --daemon"
+          execute :bundle, :exec, "sidekiq -q default -q mailers --index 0 --pidfile /home/deployer/qna/shared/tmp/pids/sidekiq-0.pid --logfile /home/deployer/qna/shared/log/sidekiq.log --daemon"
         end
       end
     end

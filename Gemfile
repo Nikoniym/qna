@@ -61,7 +61,7 @@ gem 'database_cleaner'
 gem 'selenium-webdriver'
 gem 'draper'
 gem 'unicorn'
-
+gem 'redis-rails'
 
 #change to_json
 gem 'oj'

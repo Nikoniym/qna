@@ -1,27 +1,28 @@
-.question class=("question-#{@question.id}") data-question-id="#{@question.id}"
-  h1 = @question.title
-  p = @question.body
-  = render 'attachments/attachment_list', resource: @question
-  - if can?(:changes, @question)
-    = link_to 'edit', edit_question_path(@question)
-    '  |
-    = link_to 'destroy', question_path(@question), method: :delete,  data: { confirm: 'Are you sure?' }
-  - else
-    = render 'shared/rating', resource: @question
-  br
-  b.rating-count = @question.number
-  .question-comments-list
-    h6 Comments:
-    ul
-      = render @question.comments
-    = link_to 'add comment', question_new_comment_path(@question), class: 'add-comment-link', remote: true
-  - if can?(:manage, Subscription)
-    .subscription
-      = render 'subscription'
-  hr
-  .answers-list
-    = render @answers
-  hr
-  .row
-    .col-4
-      = render 'answers/form'
+- cache @question do
+  .question class=("question-#{@question.id}") data-question-id="#{@question.id}"
+    h1 = @question.title
+    p = @question.body
+    = render 'attachments/attachment_list', resource: @question
+    - if can?(:changes, @question)
+      = link_to 'edit', edit_question_path(@question)
+      '  |
+      = link_to 'destroy', question_path(@question), method: :delete,  data: { confirm: 'Are you sure?' }
+    - else
+      = render 'shared/rating', resource: @question
+    br
+    b.rating-count = @question.number
+    .question-comments-list
+      h6 Comments:
+      ul
+        = render @question.comments
+      = link_to 'add comment', question_new_comment_path(@question), class: 'add-comment-link', remote: true
+    - if can?(:manage, Subscription)
+      .subscription
+        = render 'subscription'
+    hr
+    .answers-list
+      = render @answers
+    hr
+    .row
+      .col-4
+        = render 'answers/form'
