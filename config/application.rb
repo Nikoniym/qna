@@ -17,6 +17,7 @@ module Qna
     config.load_defaults 5.2
     config.time_zone = 'Moscow'
     config.active_record.default_timezone = :local
+    config.i18n.default_locale = :en
 
     config.action_cable.disable_request_forgery_protection = false
 
