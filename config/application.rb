@@ -33,6 +33,6 @@ module Qna
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
-    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    config.action_cable.mount_path = '/cable'
   end
 end

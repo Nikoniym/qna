@@ -52,7 +52,7 @@
         $(data.element + ' ul').append(JST["templates/comment"]({comment: data.comment}))
   }
 
-$(document).on 'turbolinks:load', ->
+$ ->
   App.cable.subscriptions['subscriptions'] = []
   actionCable()
 

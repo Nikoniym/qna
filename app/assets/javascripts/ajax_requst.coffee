@@ -36,5 +36,5 @@
       message = "<div class='mt-3'><p class='alert alert-danger'>You are not authorized to access this page.</p></div>"
       $('.flash').html(message)
 
-$(document).on 'turbolinks:load', ->
+$ ->
   ajaxRequest()
