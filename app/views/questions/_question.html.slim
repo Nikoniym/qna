@@ -1,4 +1,4 @@
 h2 = question.title
 p = question.body
-= link_to 'show', question_path(question)
+= link_to 'show', question_path(question), data: { turbolinks: false }
 hr

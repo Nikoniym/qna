@@ -10,4 +10,4 @@ function openForm() {
   })
 }
 
-$( window ).on( "load", openForm )
+$(document).on('turbolinks:load', openForm);
